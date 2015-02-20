@@ -6,6 +6,9 @@ provided as an input.
 
 See [Louf:2015]_ for the definition of the different quantities
 """
+from __future__ import division
+import math
+
 
 __all__ = ['representation']
 
@@ -22,11 +25,11 @@ def compute_totals(distribution, classes):
 
 
 def single_representation(n, n_unit, N_class, N_tot):
-    pass
+    return (n/n_unit) / (N_class/N_tot)
 
 
-def single_deviation(n, n_unit, N_class, N_tot):
-    pass
+def single_deviation(n_unit, N_class, N_tot):
+    return math.sqrt( (1/N_class)*((N_tot/n_unit) - 1) ) 
 
 
 #
@@ -41,8 +44,7 @@ def representation(distribution, classes=None):
                                                     N_unit[au],
                                                     N_class[cl],
                                                     N_tot), 
-                              single_deviation(dist_au[cl],
-                                               N_unit[au],
+                              single_deviation(N_unit[au],
                                                N_class[cl],
                                                N_tot) )
                           for cl in classes}
