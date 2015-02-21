@@ -55,7 +55,7 @@ def exposure(distribution, classes):
 
     # Compute the exposure matrix
     exposure = {cl0: {cl1: (single_exposure(distribution, cl0, cl1),
-                            single_deviation(distribution, cl0, cl1)}
+                            single_deviation(distribution, cl0, cl1)) }
                 for cl0, cl1 
                 in itertools.combination_with_replacement(classes,2)} 
 
