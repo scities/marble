@@ -6,12 +6,21 @@ the standard deviation for the null model
 """
 from __future__ import division
 import itertools
+import math
 
-from ..common import compute_totals, regroup_per_class
+from ..common import (
+        compute_totals, 
+        regroup_per_class,
+        return_categories
+        )
 from ..representation import representation as rep
 
 
+
+
 __all__ = ["exposure"]
+
+
 
 
 #
@@ -22,6 +31,7 @@ def single_exposure(distribution, cl0, cl1):
 
 def single_deviation(distribution, cl0, cl1):
     pass
+
 
 
 
