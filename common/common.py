@@ -8,7 +8,7 @@ Contains basic functions that are shared thoughout the module
 def compute_totals(distribution, classes):
     "Compute the number of individuals per class, per unit and in total"
     N_unit = {au:sum([dist_a[cl] for cl in classes]) for au in distribution}
-    N_class = {cl:sum([dist_a[cl] for dist_a in distribution.values()] for cl in classes}
+    N_class = {cl:sum([dist_a[cl] for dist_a in distribution.values()]) for cl in classes}
     N_tot = sum(N_class,values())
     return N_unit, N_class, N_tot
 
