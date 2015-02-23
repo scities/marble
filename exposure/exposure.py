@@ -6,7 +6,6 @@ the standard deviation for the null model
 """
 from __future__ import division
 import itertools
-import math
 
 from ..common import (
         compute_totals, 
@@ -66,7 +65,7 @@ def pair_variance(r, N_unit, N_class, N_tot, alpha, beta):
 #
 # Callable functions
 #
-def exposure(distribution, classes):
+def exposure(distribution, classes=None):
 
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
@@ -84,7 +83,6 @@ def exposure(distribution, classes):
     # Compute the exposure matrix
     exposure = {alpha: {beta: (pair_exposure(representation, N_unit, N_tot, alpha, beta),
                                pair_variance(representation, N_class, N_unit, N_tot, alpha, beta)) }
-                for alpha, beta 
-                in itertools.combination_with_replacement(classes,2)} 
+                for alpha, beta in itertools.combination_with_replacement(classes,2)} 
 
     return exposure 
