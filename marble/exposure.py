@@ -6,14 +6,7 @@ the standard deviation for the null model
 """
 from __future__ import division
 import itertools
-
-from ..common import (
-        compute_totals, 
-        regroup_per_class,
-        return_categories
-        )
-from ..representation import representation as rep
-
+import marble as mb
 
 
 
@@ -28,7 +21,7 @@ __all__ = ["exposure"]
 
 ## To compute the exposure
 def pair_exposure(r, N_unit, N_tot, alpha, beta):
-    E = (1/N_tot)*sum([N_unit[au]*r[au][alpha]*r[au][beta] for au in r] 
+    E = (1/N_tot)*sum([N_unit[au]*r[au][alpha]*r[au][beta] for au in r])
     return E
 
 
@@ -58,7 +51,7 @@ def pair_variance(r, N_unit, N_class, N_tot, alpha, beta):
                                                           N_class[beta])
                 for au0, au1 in itertools.combination_with_replacement(r, 2)]) )
            
-            
+    return var 
 
 
 
@@ -70,15 +63,15 @@ def exposure(distribution, classes=None):
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
     if classes:
-        distribution = regroup_per_class(distribution, classes)
+        distribution = mb.regroup_per_class(distribution, classes)
     else:
-       classes = return_categories(distribution) 
+       classes = mb.return_categories(distribution) 
 
     # Compute the total numbers per class and per individual
-    N_unit, N_class, N_tot = compute_totals(distribution) 
+    N_unit, N_class, N_tot = mb.compute_totals(distribution) 
 
     # Compute representation for all areal unit
-    representation = rep(distribution, classes)
+    representation = mb.representation(distribution, classes)
 
     # Compute the exposure matrix
     exposure = {alpha: {beta: (pair_exposure(representation, N_unit, N_tot, alpha, beta),
