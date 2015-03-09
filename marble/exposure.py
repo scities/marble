@@ -6,7 +6,11 @@ the standard deviation for the null model
 """
 from __future__ import division
 import itertools
+
 import marble as mb
+from common import (regroup_per_class,
+                   return_categories,
+                   compute_totals)
 
 
 
@@ -59,7 +63,41 @@ def pair_variance(r, N_unit, N_class, N_tot, alpha, beta):
 # Callable functions
 #
 def exposure(distribution, classes=None):
+    """ Compute the exposure between classes
+    
+    The exposure between two categories `\alpha` and `\beta` is defined as
 
+    ..math::
+        E_{\alpha \beta} = \frac{1}{N} \sum_{t=1}^{T} n(t) r_\alpha(t)
+        r_\beta(t)
+
+    where `r_\alpha(t)` is the representation of the class `\alpha` in the areal
+    unit `t`, `n(t)` the total population of `t`, and `N` the total population
+    in the considered system.
+
+    The exposure of a class to itself `E_{\alpha \alpha}` measures the
+    **isolation** of this class.
+
+    The variance is computed on the null model which corresponds to the
+    unsegregated configuration, that is when the spatial repartition of people
+    of different income classes is no different from that that would be obtained
+    if they scattered at random across the city.
+
+    Parameters
+    ----------
+
+    distribution: nested dictionaries
+        Number of people per class, per areal unit as given in the raw data
+        (ungrouped). The dictionary must have the following formatting:
+        > {areal_id: {class_id: number}}
+
+    Returns
+    -------
+
+    exposure: nested dictionaries
+        Matrix of exposures between categories.
+        > {class_id0: {class_id1: (exposure_01, variance null model)}} 
+    """
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
     if classes:
