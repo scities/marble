@@ -25,6 +25,7 @@ def regroup_per_class(distribution, classes):
 
 
 def return_categories(distribution):
+    "Return the categories in the original data"
     keys = next(distribution.itervalues()).keys()
     return {k:[k] for k in keys}
 
