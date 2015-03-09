@@ -91,6 +91,12 @@ def exposure(distribution, classes=None):
         (ungrouped). The dictionary must have the following formatting:
         > {areal_id: {class_id: number}}
 
+    classes: dictionary of lists
+        When the original categories need to be aggregated into different
+        classes. {class: [categories belonging to this class]}
+        This can be arbitrarily imposed, or computed with uncover_classes
+        function of this package.
+
     Returns
     -------
 

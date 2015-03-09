@@ -8,14 +8,14 @@ See [Louf:2015]_ for the definition of the different quantities
 """
 from __future__ import division
 
-from ..common import (
-        compute_totals, 
-        regroup_per_class,
-        return_categories
-        )
+import marble as mb
+from common import (regroup_per_class,
+                   return_categories,
+                   compute_totals)
 
 
 __all__ = ['representation']
+
 
 
 #
@@ -37,7 +37,30 @@ def single_variance(n_unit, N_class, N_tot):
 # Callable functions
 #
 def representation(distribution, classes=None):
-   
+    """ Compute the representation of the different classes in all areal units
+
+    Parameters
+    ----------
+
+    distribution: nested dictionaries
+        Number of people per class, per areal unit as given in the raw data
+        (ungrouped). The dictionary must have the following formatting:
+        > {areal_id: {class_id: number}}
+
+    classes: dictionary of lists
+        When the original categories need to be aggregated into different
+        classes. 
+        > {class: [categories belonging to this class]}
+        This can be arbitrarily imposed, or computed with uncover_classes
+        function of this package.
+
+    Returns
+    -------
+
+    representation: nested dictionnaries
+        Representation of each category in each areal unit.
+        > {areal_id: {class_id: representation_values}}
+    """
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
     if classes:
