@@ -13,3 +13,6 @@ from marble.representation import *
 
 import marble.exposure
 from marble.exposure import *
+
+import marble.dissimilarity
+from marble.dissimilarity import *
