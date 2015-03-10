@@ -6,19 +6,20 @@ Library to analyse social stratification in metropolitan areas.
 
 ### Traditional measures
 
-+ Dissimilarity (inter-classes and absolute)
-+ Evenness
-+ Concentration
++ Dissimilarity (inter-classes)
++ Evenness (or absolute dissimilarity)
++ Concentration (Checkerboard or single cluster?)
 
 ### Interaction
 
-+ Interaction
-+ Emergent classes
++ Exposure (attraction and repulsion of classes)
++ Emergent classes (looking at attraction and repulsion of categories, what can
+  we infer on the class structure?)
 
 ### Neighbourhoods
 
-+ Output tracts where categories are over-represented
-+ Outputs neighbourhoods by clutering tracts
++ Areal units where classes are over-represented
++ Outputs neighbourhoods by clustering areal units
 
 ## License and authors
 
