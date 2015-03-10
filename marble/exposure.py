@@ -107,12 +107,12 @@ def exposure(distribution, classes=None):
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
     if classes:
-        distribution = mb.regroup_per_class(distribution, classes)
+        distribution = regroup_per_class(distribution, classes)
     else:
-       classes = mb.return_categories(distribution) 
+       classes = return_categories(distribution) 
 
-    # Compute the total numbers per class and per individual
-    N_unit, N_class, N_tot = mb.compute_totals(distribution) 
+    # Compute the total numbers per class and per areal unit 
+    N_unit, N_class, N_tot = compute_totals(distribution) 
 
     # Compute representation for all areal unit
     representation = mb.representation(distribution, classes)
