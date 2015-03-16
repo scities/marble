@@ -59,7 +59,8 @@ def representation(distribution, classes=None):
 
     representation: nested dictionnaries
         Representation of each category in each areal unit.
-        > {areal_id: {class_id: representation_values}}
+        > {areal_id: {class_id: (representation_values, variance of the null
+                                model)}}
     """
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
