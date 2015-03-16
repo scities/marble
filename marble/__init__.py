@@ -16,3 +16,9 @@ from marble.exposure import *
 
 import marble.dissimilarity
 from marble.dissimilarity import *
+
+import marble.classes
+from marble.classes import *
+
+import marble.neighbourhoods
+from marble.neighbourhoods import *
