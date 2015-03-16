@@ -2,7 +2,7 @@
 """dissimilarity.py
 
 Compute the dissmilarity index between the different categories, as well as the
-absoluted dissimilarity.
+absolute dissimilarity, that we call evenness.
 """
 from __future__ import division
 
@@ -95,7 +95,7 @@ def dissimilarity(distribution, classes=None):
 
 
 
-def absolute_dissimilarity(distribution, classes=None):
+def evenness(distribution, classes=None):
     """ Compute the absolute dissimilarity of a class 
 
     The absolute dissimilarity of a class `\alpha` (which is a measure of
