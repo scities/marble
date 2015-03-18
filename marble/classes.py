@@ -5,7 +5,7 @@ Functions to uncover the classes that emerge from the spatial repartition of the
 original categories.
 """
 import csv
-
+from common import compute_totals
 
 __all__ = ['cluster_categories',
             'uncover_classes']
@@ -114,7 +114,7 @@ def _update_matrix(M_new, M_std_new, H_class, a, b):
 #
 # Callable functions
 #
-def cluster_categories(distribution, exposure, ci_factor=10):
+def cluster_categories(distribution, exposure, classes=None, ci_factor=10):
     """ Perform hierarhical clustering on the intra-tract exposure values 
     
     At each step of the aggregation, we look for the pair `(\beta, \delta)` of
@@ -161,29 +161,45 @@ def cluster_categories(distribution, exposure, ci_factor=10):
         algorithm, L[i,0] and L[i,1] are aggregated to form the n+ith cluster. The
         exposure between L[i,1] and L[i,0] is given by L[i,3].
     """
+    #
+    # Data preparation
+    #
+
+    ## Linkage matrix
     linkage = [cl for cl in sorted(M_matrix, key=lambda x: int(x))]
     N = len(linkage)
-    H_class = {linkage.index(cl0):val for cl0, val in H_class.iteritems()}
-    H_tot = sum(H_class.values())
-    M_new = {linkage.index(cl0):{linkage.index(cl1):M_matrix[cl0][cl1] for cl1 in M_matrix[cl0]}
-                                for cl0 in M_matrix}
-    M_std_new = {linkage.index(cl0):{linkage.index(cl1):M_std[cl0][cl1] for cl1 in M_std[cl0]}
-                                for cl0 in M_std}
-    #M_new = {cl0:{cl1:(M_new[cl0][cl1]*((H_class[cl0]+H_class[cl1])/H_tot) if cl0!=cl1
-    #                   else M_new[cl0][cl1]*((H_class[cl0])/H_tot)) 
-    #              for cl1 in M_new}
-    #        for cl0 in M_new}
 
+    ## Get totals
+    N_unit, N_class, N_tot = compute_totals(distribution) 
+
+    ## Use classes' position in the linkage matrix rather than names
+    # Class totals
+    for cl in classes:
+        H_class[linkage.index(cl)] = H_class.pop(cl)
+
+    #exposure
+    E = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][0]
+                                for cl1 in exposure[cl0]}
+            for cl0 in exposure}
+    E_std = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][1]
+                                for cl1 in exposure[cl0]}
+            for cl0 in exposure}
+
+
+    #
+    # Clustering
+    #
     for i in range(N-1): 
-        a,b,dist, ci = find_friends(M_new, M_std_new, H_class, ci_factor)
-        linkage.append((a,b,dist, ci)) 
-        M_new, M_std_new, H_class = update_matrix(M_new, M_std_new, H_class, a, b) 
-        print M_new
+        a, b, dist, ci = find_friends(E, E_std, N_class, ci_factor)
+        linkage.append((a,b,dist,ci)) 
+        E, E_std, N_class = update_matrix(M_new, M_std_new, N_class, a, b) 
+
+
     return linkage 
 
 
 
-def uncover_classes(distribution, exposure, ci_factor=10):
+def uncover_classes(linkage, ci_factor=10):
     """ Returns the categories sorted in classes
 
     The classes are uncovered using the spatial repartition of individuals from
@@ -192,19 +208,10 @@ def uncover_classes(distribution, exposure, ci_factor=10):
     Parameters
     ----------
 
-    distribution: nested dictionaries
-        Number of people per class, per areal unit as given in the raw data
-        (ungrouped). The dictionary must have the following formatting:
-        > {areal_id: {class_id: number}}
-
-    exposure: nested dictionaries
-        Matrix of exposures between categories.
-        > {class_id0: {class_id1: (exposure_01, variance null model)}} 
-
-    ci_factor: float
-        Number of standard deviations over which we consider to have a 99%
-        confidence interval on the exposure value. The default value, 10, is the
-        upper bound given by Chebyshev's inequality.
+    linkage: list of tuples
+        list L that encodes the hierarhical tree. At the ith iteration of the
+        algorithm, L[i,0] and L[i,1] are aggregated to form the n+ith cluster. The
+        exposure between L[i,1] and L[i,0] is given by L[i,3].
 
     Returns
     -------
@@ -214,4 +221,4 @@ def uncover_classes(distribution, exposure, ci_factor=10):
         categories as values.
         > {'class':[categories]}
     """
-    pass
+
