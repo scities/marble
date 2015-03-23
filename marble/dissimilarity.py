@@ -22,7 +22,7 @@ __all__ = ['dissimilarity',
 #
 # Helper functions
 #
-def _pair_dissimilarity(distribution, N_class, alpha, beta)
+def _pair_dissimilarity(distribution, N_class, alpha, beta):
     return 0.5*sum([ abs( dist[alpha] / N_class[alpha] - 
                           dist[beta] / N_class[beta] )
                     for t,dist in distribution.iteritems()])
