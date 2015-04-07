@@ -13,8 +13,7 @@ from common import (regroup_per_class,
 
 
 
-__all__ = ['dissimilarity',
-        'evenness']
+__all__ = ['dissimilarity']
 
 
 
