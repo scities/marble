@@ -71,7 +71,7 @@ def representation(distribution, classes=None):
 
 
     # Compute the total numbers per class and per individual
-    N_unit, N_class, N_tot = compute_totals(distribution) 
+    N_unit, N_class, N_tot = compute_totals(distribution, classes) 
 
 
     # Compute the representation and standard deviation for all areal units
