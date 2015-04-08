@@ -54,14 +54,16 @@ def overrepresented_units(distribution, classes=None):
     """
 
     ## Compute the representation of the different classes in all areal units
-    rep = mb.representation(distibution, classes)
+    rep = mb.representation(distribution, classes)
 
     ## Find the tracts where classes are overrepresented
     areal_units = {cl:[b for b in rep[cl]
-                        if rep[cl][b][0] > 1 + 2.57*math.sqrt(rep[cl][b][1])] 
+                         if rep[cl][b][0] > 1 + 2.57*math.sqrt(rep[cl][b][1])] 
                     for cl in rep}
 
-    return area_units
+    return areal_units
+
+
 
 
 def neighbourhoods(distribution, areal_units, classes=None):
