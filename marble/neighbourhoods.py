@@ -5,7 +5,11 @@ Scripts to extract the areal units where the different classes are
 over-represented, and cluster the areal units that have common boundaries.
 """
 import math
+
 import marble as mb
+from common import (regroup_per_class,
+                   return_categories,
+                   compute_totals)
 
 
 __all__ = ["overrepresented_units",
@@ -52,14 +56,21 @@ def overrepresented_units(distribution, classes=None):
         overrepresented with 99% confidence.
         > {class:[list of areal units]}
     """
+    # Regroup into classes if specified. Otherwise return categories indicated
+    # in the data
+    if classes:
+        distribution = regroup_per_class(distribution, classes)
+    else:
+       classes = return_categories(distribution) 
+
 
     ## Compute the representation of the different classes in all areal units
     rep = mb.representation(distribution, classes)
 
     ## Find the tracts where classes are overrepresented
-    areal_units = {cl:[b for b in rep[cl]
-                         if rep[cl][b][0] > 1 + 2.57*math.sqrt(rep[cl][b][1])] 
-                    for cl in rep}
+    areal_units = {cl:[au for au in rep
+                          if rep[au][cl][0] > 1 + 2.57*math.sqrt(rep[au][cl][1])] 
+                    for cl in classes}
 
     return areal_units
 
