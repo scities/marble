@@ -35,6 +35,7 @@ def unit_variance(N_tot, N_au, N_alpha, N_beta):
     "Compute the variance of E_{\alpha \beta}(t)" 
     if N_alpha == 0 or N_beta == 0:
         return float('nan')
+        print 'oops'
     if N_au == 0:
         return 0#float('nan') 
     else:
@@ -127,9 +128,20 @@ def exposure(distribution, classes=None):
     representation = mb.representation(distribution, classes)
 
     # Compute the exposure matrix
-    exposure = {alpha: {beta: (pair_exposure(representation, N_unit, N_tot, alpha, beta),
-                               pair_variance(representation, N_unit, N_class, N_tot, alpha, beta)) 
-                               for beta in classes}
-                for alpha in classes} 
+    # Only half of the values are computed (the matrix is symmetric)
+    exposure = {alpha:{} for alpha in classes}
+    done = []
+    for alpha in classes:
+        for beta in classes:
+            if beta not in done:
+                exposure[alpha][beta] = (pair_exposure(representation, N_unit, N_tot, alpha, beta),
+                               pair_variance(representation, N_unit, N_class, N_tot, alpha, beta))
+        done.append(alpha)
+
+    # Symmetrize the output
+    for c0 in exposure.iterkeys():
+        for c1 in exposure[c0].iterkeys():
+            if c0 not in exposure[c1]:
+                exposure[c1][c0] = exposure[c0][c1]
 
     return exposure 
