@@ -32,7 +32,7 @@ def single_representation(n, n_unit, N_class, N_tot):
 def single_variance(n_unit, N_class, N_tot):
     "Compute the standard deviation in a given areal unit"
     if N_class != 0 and n_unit != 0:
-        return (1/N_class)*((N_tot/n_unit) - 1)
+        return (1/N_class)*(n_unit/N_tot)*(1-(n_unit/N_tot))
     else:
         return float('nan')
 
