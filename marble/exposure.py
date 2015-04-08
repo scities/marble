@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """exposure.py
 
-Functions needed to compute the exposure matrix (including concentration) and
+Functions needed to compute the exposure matrix (including isolation) and
 the standard deviation for the null model
 """
 from __future__ import division
@@ -25,24 +25,32 @@ __all__ = ["exposure"]
 
 ## To compute the exposure
 def pair_exposure(r, N_unit, N_tot, alpha, beta):
-    E = (1/N_tot)*sum([N_unit[au]*r[au][alpha]*r[au][beta] for au in r])
+    E = (1/N_tot)*sum([N_unit[au]*r[au][alpha][0]*r[au][beta][0] for au in r])
     return E
 
 
 
 ## To compute the variance of the exposure
-def unit_variance(N_tot, N_t, N_alpha, N_beta):
+def unit_variance(N_tot, N_au, N_alpha, N_beta):
     "Compute the variance of E_{\alpha \beta}(t)" 
-    var = (1/(N_alpha*N_beta)) * ((N_tot/N_t)-1)**2 \
-            + (1/N_alpha) * ((N_tot/N_t)-1) \
-            + (1/N_beta) * ((N_tot/N_t)-1)
+    if N_alpha == 0 or N_beta == 0:
+        return float('nan')
+    if N_au == 0:
+        return float('nan') 
+    else:
+        var = (1/(N_alpha*N_beta)) * ((N_tot/N_au)-1)**2 \
+                + (1/N_alpha) * ((N_tot/N_au)-1) \
+                + (1/N_beta) * ((N_tot/N_au)-1)
 
     return var
 
 
 def units_covariance(N_alpha, N_beta):
     "Compute the covariance of E_{\alpha \beta}(s) and E_{\alpha \beta}(t)"
-    return (1-(1/N_alpha)) + (1-(1/N_beta)) -1 
+    if N_alpha == 0 or N_beta == 0:
+        return float('nan')
+    else:
+        return (1-(1/N_alpha)) + (1-(1/N_beta)) -1 
 
 
 def pair_variance(r, N_unit, N_class, N_tot, alpha, beta):
@@ -53,7 +61,7 @@ def pair_variance(r, N_unit, N_class, N_tot, alpha, beta):
                                 for au in r]) 
         + 2*sum([N_unit[au0]*N_unit[au1]*units_covariance(N_class[alpha],
                                                           N_class[beta])
-                for au0, au1 in itertools.combination_with_replacement(r, 2)]) )
+                for au0, au1 in itertools.combinations_with_replacement(r, 2)]) )
            
     return var 
 
@@ -111,15 +119,17 @@ def exposure(distribution, classes=None):
     else:
        classes = return_categories(distribution) 
 
+
     # Compute the total numbers per class and per areal unit 
-    N_unit, N_class, N_tot = compute_totals(distribution) 
+    N_unit, N_class, N_tot = compute_totals(distribution, classes) 
 
     # Compute representation for all areal unit
     representation = mb.representation(distribution, classes)
 
     # Compute the exposure matrix
     exposure = {alpha: {beta: (pair_exposure(representation, N_unit, N_tot, alpha, beta),
-                               pair_variance(representation, N_class, N_unit, N_tot, alpha, beta)) }
-                for alpha, beta in itertools.combination_with_replacement(classes,2)} 
+                               pair_variance(representation, N_unit, N_class, N_tot, alpha, beta)) 
+                               for beta in classes}
+                for alpha in classes} 
 
     return exposure 
