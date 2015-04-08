@@ -36,11 +36,11 @@ def unit_variance(N_tot, N_au, N_alpha, N_beta):
     if N_alpha == 0 or N_beta == 0:
         return float('nan')
     if N_au == 0:
-        return float('nan') 
+        return 0#float('nan') 
     else:
-        var = (1/(N_alpha*N_beta)) * ((N_tot/N_au)-1)**2 \
-                + (1/N_alpha) * ((N_tot/N_au)-1) \
-                + (1/N_beta) * ((N_tot/N_au)-1)
+        var = (1./(N_alpha*N_beta)) * ((N_tot/N_au)-1)**2 \
+                + (1./N_alpha) * ((N_tot/N_au)-1) \
+                + (1./N_beta) * ((N_tot/N_au)-1)
 
     return var
 
@@ -50,18 +50,18 @@ def units_covariance(N_alpha, N_beta):
     if N_alpha == 0 or N_beta == 0:
         return float('nan')
     else:
-        return (1-(1/N_alpha)) + (1-(1/N_beta)) -1 
+        return (1-(1/N_alpha))*(1-(1/N_beta)) - 1 
 
 
 def pair_variance(r, N_unit, N_class, N_tot, alpha, beta):
-    var = (1/N_tot**2) * ( sum([(N_unit[au]**2)*unit_variance(N_tot, 
+    var = (1/N_tot)**2 * ( sum([(N_unit[au]**2)*unit_variance(N_tot, 
                                                               N_unit[au],
                                                               N_class[alpha], 
                                                               N_class[beta]) 
-                                for au in r]) 
+                                for au in N_unit]) 
         + 2*sum([N_unit[au0]*N_unit[au1]*units_covariance(N_class[alpha],
                                                           N_class[beta])
-                for au0, au1 in itertools.combinations_with_replacement(r, 2)]) )
+                for au0, au1 in itertools.combinations(N_unit, 2)]) )
            
     return var 
 
