@@ -100,8 +100,8 @@ def _update_matrix(E, E_var, N_class, a, b):
     #
     ## Compute variance of exposure betwenn new categories and others 
     off_diag = {c:(1/(N_class[a]+N_class[b])**2)*
-                   ( (N_class[a]**2)*(E_var[a][c]**2) +
-                     (N_class[b]**2)*(E_var[b][c]**2) )
+                   ( (N_class[a]**2)*(E_var[a][c]) +
+                     (N_class[b]**2)*(E_var[b][c]))
                for c in E_var if c not in [a,b]}
     diag = (1/(N_class[a]+N_class[b])**4)*(N_class[a]**4*E_var[a][a] +
                                            N_class[b]**4*E_var[b][b] +
