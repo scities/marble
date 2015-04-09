@@ -4,6 +4,7 @@
 Functions to uncover the classes that emerge from the spatial repartition of the
 original categories.
 """
+from __future__ import division
 import csv
 from common import compute_totals
 
@@ -61,54 +62,72 @@ def _find_friends(E, N_class):
 
 
 
-def _update_matrix(M_new, M_std_new, H_class, a, b):
-    ## New index
-    l = max(H_class.keys())+1
+def _update_matrix(E, E_var, N_class, a, b):
 
-    ## Compute new M-values
-    # Compute new lines
-    new = {cl:(1/(H_class[a]+H_class[b]))*(H_class[a]*M_new[a][cl] + H_class[b]*M_new[b][cl]) for cl in M_new if cl not in [a,b]}
-    diag = (1/(H_class[a]+H_class[b]))*(H_class[a]*M_new[a][a] +
-            H_class[b]*M_new[b][b])
-    # Delete the old categories 
-    for cl0 in M_new:
-       M_new[cl0].pop(a, None)
-       M_new[cl0].pop(b, None)
-    M_new.pop(a, None)
-    M_new.pop(b, None)
-    # Add new lines
-    for cl0 in M_new:
-        M_new[cl0][l] = new[cl0]
-    M_new[l] = new
-    M_new[l][l]=diag
+    ## New category index
+    l = max(N_class.keys())+1
+
+    #
+    # Compute new exposure values 
+    #
+
+    ## Compute exposure between new category and others 
+    exposure = {c: (1/(N_class[a]+N_class[b]))*(N_class[a]*E[a][c] +
+                                                N_class[b]*E[b][c]) 
+                for c in E if c not in [a,b]}
+    isolation = (1/(N_class[a]+N_class[b])**2)*(N_class[a]**2*E[a][a] +
+                                                N_class[b]**2*E[b][b] +
+                                                2*N_class[a]*N_class[b]*E[a][b])
+
+    ## Delete the old categories 
+    for c0 in E:
+       E[c0].pop(a, None)
+       E[c0].pop(b, None)
+    E.pop(a, None)
+    E.pop(b, None)
+
+    ## Add new lines to matrix
+    for c0 in E:
+        E[c0][l] = exposure[c0]
+    E[l] = exposure
+    E[l][l] = isolation
    
 
-    ## Compute new standard deviations
-    # New lines
-    new = {cl:(1/(H_class[a]+H_class[b]))*
-              math.sqrt(((H_class[a]**2)*(M_std_new[a][cl]**2) +
-                         (H_class[b]**2)*(M_std_new[b][cl]**2)))
-           for cl in M_std_new if cl not in [a,b]}
-    diag = (1/(H_class[a]+H_class[b]))* math.sqrt(((H_class[a]**2)*(M_std_new[a][a]**2) +
-                         (H_class[b]**2)*(M_std_new[b][b]**2)))
-    for cl0 in M_std_new:
-       M_std_new[cl0].pop(a, None)
-       M_std_new[cl0].pop(b, None)
 
-    M_std_new.pop(a, None)
-    M_std_new.pop(b, None)
-    # Add new lines
-    for cl0 in M_std_new:
-        M_std_new[cl0][l] = new[cl0]
-    M_std_new[l] = new
-    M_std_new[l][l] = diag 
+    #
+    # Compute new exposure variance
+    #
 
-    ## update H_class
-    H_class[l] = H_class[a] + H_class[b]
-    H_class.pop(a, None)
-    H_class.pop(b, None)
+    ## Compute variance of exposure betwenn new categories and others 
+    off_diag = {c:(1/(N_class[a]+N_class[b])**2)*
+                   ( (N_class[a]**2)*(E_var[a][c]**2) +
+                     (N_class[b]**2)*(E_var[b][c]**2) )
+               for c in E_var if c not in [a,b]}
+    diag = (1/(N_class[a]+N_class[b])**4)*(N_class[a]**4*E_var[a][a] +
+                                           N_class[b]**4*E_var[b][b] +
+                                           (N_class[a]*N_class[b])**2*E_var[a][b])
+    
+    ## Delete the old categories
+    for c0 in E_var:
+       E_var[c0].pop(a, None)
+       E_var[c0].pop(b, None)
+    E_var.pop(a, None)
+    E_var.pop(b, None)
 
-    return (M_new, M_std_new, H_class)
+    # Add new lines to matrix
+    for c0 in E_var:
+        E_var[c0][l] = off_diag[cl0]
+    E_var[l] = off_diag
+    E_var[l][l] = diag 
+
+    #
+    # Update the number of individuals per class
+    #
+    N_class[l] = N_class[a] + N_class[b]
+    N_class.pop(a, None)
+    N_class.pop(b, None)
+
+    return (E, E_var, N_class)
 
 
 
