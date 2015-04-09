@@ -5,8 +5,10 @@ Functions to uncover the classes that emerge from the spatial repartition of the
 original categories.
 """
 from __future__ import division
+import copy
 import csv
-from common import compute_totals
+from common import (compute_totals,
+                    return_categories)
 
 __all__ = ['cluster_categories',
             'uncover_classes']
@@ -34,19 +36,18 @@ def _find_friends(E, N_class):
     """ Find the two categories with highest M value and return
     Be careful to normalise properly the M-values above 1!  
     """
-
     ## Normalise the values above one by the maximum
-    E_norm = E.copy()
+    E_norm = copy.deepcopy(E)
     for c0 in E_norm:
         for c1, e in E_norm[c0].iteritems():
             if e>1:
                 max_e = sum(N_class.values())*(N_class[c0]+N_class[c1]) \
-                         / 4*N_class[c0]*N_class[c1]
+                         / (4*N_class[c0]*N_class[c1])
                 E_norm[c0][c1] = 1 + (e-1)/(max_e-1) 
 
 
     ## Discard isolation values
-    E_norm_nodiag = {c0:{c1:(E[c0][c1] 
+    E_norm_nodiag = {c0:{c1:(E_norm[c0][c1] 
                                 if c1!=c0 else 0) 
                           for c1 in E[c0]}
                      for c0 in E}
@@ -57,13 +58,13 @@ def _find_friends(E, N_class):
                           for c1, val in subdict.iteritems()], 
                           key=lambda x:x[2])[:2]
 
+    print alpha, beta
     return alpha, beta
 
 
 
 
 def _update_matrix(E, E_var, N_class, a, b):
-
     ## New category index
     l = max(N_class.keys())+1
 
@@ -97,7 +98,6 @@ def _update_matrix(E, E_var, N_class, a, b):
     #
     # Compute new exposure variance
     #
-
     ## Compute variance of exposure betwenn new categories and others 
     off_diag = {c:(1/(N_class[a]+N_class[b])**2)*
                    ( (N_class[a]**2)*(E_var[a][c]**2) +
@@ -116,9 +116,10 @@ def _update_matrix(E, E_var, N_class, a, b):
 
     # Add new lines to matrix
     for c0 in E_var:
-        E_var[c0][l] = off_diag[cl0]
+        E_var[c0][l] = off_diag[c0]
     E_var[l] = off_diag
     E_var[l][l] = diag 
+
 
     #
     # Update the number of individuals per class
@@ -135,7 +136,7 @@ def _update_matrix(E, E_var, N_class, a, b):
 #
 # Callable functions
 #
-def cluster_categories(distribution, exposure, classes=None):
+def cluster_categories(distribution, exposure):
     """ Perform hierarhical clustering on the intra-tract exposure values 
     
     At each step of the aggregation, we look for the pair `(\beta, \delta)` of
@@ -192,12 +193,12 @@ def cluster_categories(distribution, exposure, classes=None):
     N = len(linkage)
 
     ## Get totals
+    classes = return_categories(distribution)
     N_unit, N_class, N_tot = compute_totals(distribution, classes) 
 
     
 
     ## Use classes' position in the linkage matrix rather than names
-
     # Class totals
     for cl in classes:
         N_class[linkage.index(cl)] = N_class.pop(cl)
@@ -218,7 +219,7 @@ def cluster_categories(distribution, exposure, classes=None):
     for i in range(N-1): 
         a, b = _find_friends(E, N_class)
         linkage.append((a, b, E[a][b], E_var[a][b])) 
-        E, E_var, N_class = _update_matrix(E, E, N_class, a, b) 
+        E, E_var, N_class = _update_matrix(E, E_var, N_class, a, b) 
 
 
     return linkage 
