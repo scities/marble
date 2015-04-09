@@ -161,7 +161,8 @@ def cluster_categories(distribution, exposure, classes=None):
     linkage: list of tuples
         list L that encodes the hierarhical tree. At the ith iteration of the
         algorithm, L[i,0] and L[i,1] are aggregated to form the n+ith cluster. The
-        exposure between L[i,1] and L[i,0] is given by L[i,3].
+        exposure between L[i,1] and L[i,0] is given by L[i,3], the variance is
+        given by L[i,4].
     """
     #
     # Data preparation
@@ -196,9 +197,9 @@ def cluster_categories(distribution, exposure, classes=None):
     # Clustering
     #
     for i in range(N-1): 
-        a, b = find_friends(E, N_class)
+        a, b = _find_friends(E, N_class)
         linkage.append((a, b, E[a][b], E_var[a][b])) 
-        E, E_var, N_class = update_matrix(E, E, N_class, a, b) 
+        E, E_var, N_class = _update_matrix(E, E, N_class, a, b) 
 
 
     return linkage 
