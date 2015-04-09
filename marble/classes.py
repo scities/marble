@@ -6,6 +6,7 @@ original categories.
 """
 from __future__ import division
 import copy
+import math
 import csv
 from common import (compute_totals,
                     return_categories)
@@ -18,17 +19,17 @@ __all__ = ['cluster_categories',
 #
 # Helper functions
 #
-def _aggregate_linkage(categories, linkage):
-    " Aggregate until the M value is < than 1 "
-    agg = categories
-    print agg
-    print linkage
+def _aggregate_linkage(linkage, categories, ci_factor):
+    """ Aggregate until the M value is < than 1 
+    Categories are contained in linkage... """
+
+    agg = [[c] for c in categories]
     for l in linkage[len(categories):]:
-        print l
-        if l[2]>1:
-           agg.append("%s|%s"%(agg[l[0]],agg[l[1]]))
+        if l[2] > 1 + ci_factor*math.sqrt(l[3]):
+           agg.append([a for a in agg[l[0]]] + [a for a in agg[l[1]]])
            agg[l[0]] = 0
            agg[l[1]] = 0
+
     return [a for a in agg if a!=0]
 
 
@@ -148,7 +149,78 @@ def cluster_categories(distribution, exposure):
         E_{\alpha, \gamma} = \frac{1}{N_\beta + N_\delta} \left( N_\beta
         E_{\alpha, \beta} + N_\delta M_{\alpha, \delta} \right)
 
-    We only aggregate the pair if the two categories attract each other, that is
+
+    Parameters
+    ----------
+
+    distribution: nested dictionaries
+        Number of people per class, per areal unit as given in the raw data
+        (ungrouped). The dictionary must have the following formatting:
+        > {areal_id: {class_id: number}}
+
+    exposure: nested dictionaries
+        Matrix of exposures between categories.
+        > {class_id0: {class_id1: (exposure_01, variance null model)}} 
+
+
+    Returns
+    -------
+
+    linkage: list of tuples
+        list L that encodes the hierarhical tree. At the ith iteration of the
+        algorithm, L[i,0] and L[i,1] are aggregated to form the n+ith cluster. The
+        exposure between L[i,1] and L[i,0] is given by L[i,3], the variance is
+        given by L[i,4].
+    """
+    #
+    # Data preparation
+    #
+
+    ## Linkage matrix
+    linkage = [cl for cl in sorted(exposure, key=lambda x: int(x))]
+    N = len(linkage)
+
+    ## Get total
+    categories = return_categories(distribution)
+    N_unit, N_class, N_tot = compute_totals(distribution, categories) 
+
+    
+
+    ## Use classes' position in the linkage matrix rather than names
+    # Class totals
+    for cl in categories:
+        N_class[linkage.index(cl)] = N_class.pop(cl)
+
+    #exposure
+    E = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][0]
+                                for cl1 in exposure[cl0]}
+            for cl0 in exposure}
+    E_var = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][1]
+                                for cl1 in exposure[cl0]}
+            for cl0 in exposure}
+
+
+
+    #
+    # Clustering
+    #
+    for i in range(N-1): 
+        a, b = _find_friends(E, N_class)
+        linkage.append((a, b, E[a][b], E_var[a][b])) 
+        E, E_var, N_class = _update_matrix(E, E_var, N_class, a, b) 
+
+
+    return linkage 
+
+
+
+def uncover_classes(distribution, exposure, ci_factor=10):
+    """ Returns the categories sorted in classes
+
+    The classes are uncovered using the spatial repartition of individuals from
+    different categories, using their relative exposure.
+
+    We only aggregate pair in the same class if the two categories attract each other, that is
     if the exposure
    
    .. math::
@@ -178,74 +250,19 @@ def cluster_categories(distribution, exposure):
     Returns
     -------
 
-    linkage: list of tuples
-        list L that encodes the hierarhical tree. At the ith iteration of the
-        algorithm, L[i,0] and L[i,1] are aggregated to form the n+ith cluster. The
-        exposure between L[i,1] and L[i,0] is given by L[i,3], the variance is
-        given by L[i,4].
-    """
-    #
-    # Data preparation
-    #
-
-    ## Linkage matrix
-    linkage = [cl for cl in sorted(exposure, key=lambda x: int(x))]
-    N = len(linkage)
-
-    ## Get totals
-    classes = return_categories(distribution)
-    N_unit, N_class, N_tot = compute_totals(distribution, classes) 
-
-    
-
-    ## Use classes' position in the linkage matrix rather than names
-    # Class totals
-    for cl in classes:
-        N_class[linkage.index(cl)] = N_class.pop(cl)
-
-    #exposure
-    E = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][0]
-                                for cl1 in exposure[cl0]}
-            for cl0 in exposure}
-    E_var = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][1]
-                                for cl1 in exposure[cl0]}
-            for cl0 in exposure}
-
-
-
-    #
-    # Clustering
-    #
-    for i in range(N-1): 
-        a, b = _find_friends(E, N_class)
-        linkage.append((a, b, E[a][b], E_var[a][b])) 
-        E, E_var, N_class = _update_matrix(E, E_var, N_class, a, b) 
-
-
-    return linkage 
-
-
-
-def uncover_classes(linkage, ci_factor=10):
-    """ Returns the categories sorted in classes
-
-    The classes are uncovered using the spatial repartition of individuals from
-    different categories, using their relative exposure.
-
-    Parameters
-    ----------
-
-    linkage: list of tuples
-        list L that encodes the hierarhical tree. At the ith iteration of the
-        algorithm, L[i,0] and L[i,1] are aggregated to form the n+ith cluster. The
-        exposure between L[i,1] and L[i,0] is given by L[i,3].
-
-    Returns
-    -------
-
-    classes: dictionary
-        Dictionnary of classes with the list of the corresponding original
+    classes: nested lists
+        list of classes with the list of the corresponding original
         categories as values.
-        > {'class':[categories]}
+        > [[categories]]
     """
 
+    ## Get the categories from the distribution
+    categories = return_categories(distribution).keys()
+
+    ## Extract the linkage matrix
+    linkage = cluster_categories(distribution, exposure) 
+
+    ## Get the classes
+    classes = _aggregate_linkage(linkage, categories, ci_factor)
+
+    return classes
