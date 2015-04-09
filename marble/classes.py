@@ -29,7 +29,7 @@ def _aggregate_linkage(categories, linkage):
     return [a for a in agg if a!=0]
 
 
-def _find_friends(E, N_class, ci_factor):
+def _find_friends(E, N_class):
     """ Find the two categories with highest M value and return
     Be careful to normalise properly the M-values above 1!  
     """
@@ -50,6 +50,8 @@ def _find_friends(E, N_class, ci_factor):
                           for c1 in E[c0]}
                      for c0 in E}
 
+
+    ## Find the pair of categories with the highest mutual attraction
     (alpha, beta) = max( [(c0, c1, val) for c0, subdict in E_norm_nodiag.iteritems() 
                           for c1, val in subdict.iteritems()], 
                           key=lambda x:x[2])[:2]
@@ -114,7 +116,7 @@ def _update_matrix(M_new, M_std_new, H_class, a, b):
 #
 # Callable functions
 #
-def cluster_categories(distribution, exposure, classes=None, ci_factor=10):
+def cluster_categories(distribution, exposure, classes=None):
     """ Perform hierarhical clustering on the intra-tract exposure values 
     
     At each step of the aggregation, we look for the pair `(\beta, \delta)` of
@@ -194,8 +196,8 @@ def cluster_categories(distribution, exposure, classes=None, ci_factor=10):
     # Clustering
     #
     for i in range(N-1): 
-        a, b = find_friends(E, N_class, ci_factor)
-        linkage.append((a,b,dist,ci)) 
+        a, b = find_friends(E, N_class)
+        linkage.append((a, b, E[a][b], E_var[a][b])) 
         E, E_var, N_class = update_matrix(E, E, N_class, a, b) 
 
 
