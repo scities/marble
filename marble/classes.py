@@ -11,6 +11,7 @@ __all__ = ['cluster_categories',
             'uncover_classes']
 
 
+
 #
 # Helper functions
 #
@@ -28,33 +29,32 @@ def _aggregate_linkage(categories, linkage):
     return [a for a in agg if a!=0]
 
 
-def _find_friends(M_matrix, M_std, H_class, ci_factor):
+def _find_friends(E, N_class, ci_factor):
     """ Find the two categories with highest M value and return
-    Look at whether there is a couple of values that has a M-value above 1
-    (within 10 \sigma) if not, return -1
-    
     Be careful to normalise properly the M-values above 1!  
     """
-    M_matrix_new = M_matrix.copy()
-    for cl0 in M_matrix_new:
-        for cl1,m in M_matrix_new[cl0].iteritems():
-            if m>1:
-                max_m = sum(H_class.values()) / (H_class[cl0]+H_class[cl1])
-                M_matrix_new[cl0][cl1] = 1 + (m-1)/(max_m-1) 
-    print M_matrix_new   
-    M_matrix_new = {cl0:{cl1:(M_matrix[cl0][cl1] if
-        cl1!=cl0 else 0) for cl1 in M_matrix[cl0]}
-                                for cl0 in M_matrix}
-    M_std_new = {cl0:{cl1:(M_std[cl0][cl1] if
-        cl1!=cl0 else 0) for cl1 in M_std[cl0]}
-                                for cl0 in M_std}
+
+    ## Normalise the values above one by the maximum
+    E_norm = E.copy()
+    for c0 in E_norm:
+        for c1, e in E_norm[c0].iteritems():
+            if e>1:
+                max_e = sum(N_class.values())*(N_class[c0]+N_class[c1]) \
+                         / 4*N_class[c0]*N_class[c1]
+                E_norm[c0][c1] = 1 + (e-1)/(max_e-1) 
 
 
-    (alpha, beta, val, sigma) = max( [(cl0, cl1, val, ci_factor*M_std_new[cl0][cl1]) 
-                                for cl0, subdict in M_matrix_new.iteritems() 
-                                for cl1, val in subdict.iteritems()], key=lambda x: x[2]) 
+    ## Discard isolation values
+    E_norm_nodiag = {c0:{c1:(E[c0][c1] 
+                                if c1!=c0 else 0) 
+                          for c1 in E[c0]}
+                     for c0 in E}
 
-    return (alpha, beta, val, sigma)
+    (alpha, beta) = max( [(c0, c1, val) for c0, subdict in E_norm_nodiag.iteritems() 
+                          for c1, val in subdict.iteritems()], 
+                          key=lambda x:x[2])[:2]
+
+    return alpha, beta
 
 
 
@@ -123,8 +123,8 @@ def cluster_categories(distribution, exposure, classes=None, ci_factor=10):
     with the other categories `\alpha` is given by
 
     .. math::
-        M_{\alpha, \gamma} = \frac{1}{N_\beta + N_\delta} \left( N_\beta
-        M_{\alpha, \beta} + N_\delta M_{\alpha, \delta} \right)
+        E_{\alpha, \gamma} = \frac{1}{N_\beta + N_\delta} \left( N_\beta
+        E_{\alpha, \beta} + N_\delta M_{\alpha, \delta} \right)
 
     We only aggregate the pair if the two categories attract each other, that is
     if the exposure
@@ -166,33 +166,37 @@ def cluster_categories(distribution, exposure, classes=None, ci_factor=10):
     #
 
     ## Linkage matrix
-    linkage = [cl for cl in sorted(M_matrix, key=lambda x: int(x))]
+    linkage = [cl for cl in sorted(exposure, key=lambda x: int(x))]
     N = len(linkage)
 
     ## Get totals
-    N_unit, N_class, N_tot = compute_totals(distribution) 
+    N_unit, N_class, N_tot = compute_totals(distribution, classes) 
+
+    
 
     ## Use classes' position in the linkage matrix rather than names
+
     # Class totals
     for cl in classes:
-        H_class[linkage.index(cl)] = H_class.pop(cl)
+        N_class[linkage.index(cl)] = N_class.pop(cl)
 
     #exposure
     E = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][0]
                                 for cl1 in exposure[cl0]}
             for cl0 in exposure}
-    E_std = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][1]
+    E_var = {linkage.index(cl0):{linkage.index(cl1):exposure[cl0][cl1][1]
                                 for cl1 in exposure[cl0]}
             for cl0 in exposure}
+
 
 
     #
     # Clustering
     #
     for i in range(N-1): 
-        a, b, dist, ci = find_friends(E, E_std, N_class, ci_factor)
+        a, b = find_friends(E, N_class, ci_factor)
         linkage.append((a,b,dist,ci)) 
-        E, E_std, N_class = update_matrix(M_new, M_std_new, N_class, a, b) 
+        E, E_var, N_class = update_matrix(E, E, N_class, a, b) 
 
 
     return linkage 
