@@ -58,9 +58,7 @@ def overrepresented_units(distribution, classes=None):
     """
     # Regroup into classes if specified. Otherwise return categories indicated
     # in the data
-    if classes:
-        distribution = regroup_per_class(distribution, classes)
-    else:
+    if not classes:
        classes = return_categories(distribution) 
 
 
