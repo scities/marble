@@ -125,7 +125,7 @@ def exposure(distribution, classes=None):
     N_unit, N_class, N_tot = compute_totals(distribution, classes) 
 
     # Compute representation for all areal unit
-    representation = mb.representation(distribution, classes)
+    representation = mb.representation(distribution)
 
     # Compute the exposure matrix
     # Only half of the values are computed (the matrix is symmetric)
