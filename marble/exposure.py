@@ -5,6 +5,7 @@ Functions needed to compute the exposure matrix (including isolation) and
 the standard deviation for the null model
 """
 from __future__ import division
+import collections
 import itertools
 
 import marble as mb
@@ -129,14 +130,10 @@ def exposure(distribution, classes=None):
 
     # Compute the exposure matrix
     # Only half of the values are computed (the matrix is symmetric)
-    exposure = {alpha:{} for alpha in classes}
-    done = []
-    for alpha in classes:
-        for beta in classes:
-            if beta not in done:
-                exposure[alpha][beta] = (pair_exposure(representation, N_unit, N_tot, alpha, beta),
-                               pair_variance(representation, N_unit, N_class, N_tot, alpha, beta))
-        done.append(alpha)
+    exposure = collections.defaultdict(dict)
+    for alpha, beta in itertools.combinations_with_replacement(classes, 2):
+        exposure[alpha][beta] = (pair_exposure(representation, N_unit, N_tot, alpha, beta),
+                                 pair_variance(representation, N_unit, N_class, N_tot, alpha, beta))
 
     # Symmetrize the output
     for c0 in exposure.iterkeys():

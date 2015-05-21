@@ -4,6 +4,8 @@
 Compute the dissmilarity index between the different categories.
 """
 from __future__ import division
+import collections
+import itertools
 
 from common import (regroup_per_class,
                    return_categories,
@@ -75,16 +77,12 @@ def dissimilarity(distribution, classes=None):
 
     ## Compute the dissimilarity matrix
     # Only half of the values are computed (the matrix is symmetric)
-    dissimilarity = {alpha:{} for alpha in classes}
-    done = []
-    for alpha in classes:
-        for beta in classes:
-            if beta not in done:
-                dissimilarity[alpha][beta] = _pair_dissimilarity(distribution, 
-                                                                N_class, 
-                                                                alpha, 
-                                                                beta)
-        done.append(alpha)
+    dissimilarity = collections.defaultdict(dict)
+    for alpha, beta in itertools.combinations_with_replacement(classes, 2):
+        dissimilarity[alpha][beta] = _pair_dissimilarity(distribution, 
+                                                        N_class, 
+                                                        alpha, 
+                                                        beta)
 
     # Symmetrize the output
     for c0 in dissimilarity.iterkeys():
