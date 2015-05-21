@@ -6,12 +6,14 @@ over-represented, and cluster the areal units that have common boundaries.
 """
 import math
 import shapely
+import networkx as nx
 
 import marble as mb
 from common import (regroup_per_class,
                    return_categories,
                    compute_totals)
 
+__authors__ = """\t""".join(["Rémi Louf <remi.louf@sciti.es>"])
 
 __all__ = ["overrepresented_units",
            "neighbourhoods",
@@ -138,6 +140,10 @@ def neighbourhoods(distribution, areal_units, classes=None):
 
     ## Find the areal units where classes are overrepresented
     or_units = overrepresented_units(distribution, classes)
+    
+    ## Compute the adjacency list
+    adjacency = _adjacency(areal_units)
+
 
     return neighbourhoods
 
