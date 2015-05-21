@@ -1,2 +1,3 @@
+*.rst
 *.pyc
 __pycache__
