@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """common.py
 
-Contains basic functions that are shared thoughout the module
+Contains basic functions that are shared throughout the module
 """
 
 
@@ -16,9 +16,15 @@ def compute_totals(distribution, classes):
 
 def regroup_per_class(distribution, classes):
     "Return classes as they are presented in the data"
-    new_distribution =  {au: {cl: sum([dist_au[c] for c in composition]) 
-                              for cl,composition in classes.iteritems()}
-                         for au, dist_au in distribution.iteritems()}
+
+    try:
+        new_distribution =  {au: {cl: sum([dist_au[c] for c in composition]) 
+                                  for cl,composition in classes.iteritems()}
+                             for au, dist_au in distribution.iteritems()}
+
+    except KeyError:
+        raise KeyError("Verify that the categories specified in the class"
+                       " definitions exist in the original data.")
 
     return new_distribution
 
