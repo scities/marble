@@ -68,14 +68,28 @@ def dissimilarity(distribution, classes=None):
     else:
         classes = return_categories(distibution)
 
+
     ## Compute total numbers of individuals per class and areal unit
     N_unit, N_class, N_tot = compute_totals(distribution) 
 
+
     ## Compute the dissimilarity matrix
-    dissimilarity = {alpha: {beta: _pair_dissimilarity(distribution, 
-                                                    N_class, 
-                                                    alpha, 
-                                                    beta)} 
-                        for alpha, beta in itertools.combination(classes, 2)}
+    # Only half of the values are computed (the matrix is symmetric)
+    dissimilarity = {alpha:{} for alpha in classes}
+    done = []
+    for alpha in classes:
+        for beta in classes:
+            if beta not in done:
+                dissimilarity[alpha][beta] = _pair_dissimilarity(distribution, 
+                                                                N_class, 
+                                                                alpha, 
+                                                                beta)
+        done.append(alpha)
+
+    # Symmetrize the output
+    for c0 in dissimilarity.iterkeys():
+        for c1 in dissimilarity[c0].iterkeys():
+            if c0 not in dissimilarity[c1]:
+                dissimilarity[c1][c0] = dissimilarity[c0][c1]
 
     return dissimilarity
