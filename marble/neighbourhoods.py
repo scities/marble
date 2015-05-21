@@ -24,7 +24,7 @@ __all__ = ["overrepresented_units",
 #
 # Helper functions
 #
-def _adjacency(areal_units)
+def _adjacency(areal_units):
     """ Compute the adjacency matrix of areal units
 
     Two areal units are said adjacent if their repective boundaries touch one
