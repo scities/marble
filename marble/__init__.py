@@ -4,7 +4,6 @@ from __future__ import absolute_import
 
 
 
-__author__ = "Rémi Louf"
 __email__ = "remi.louf@sciti.es"
 __website__ = "www.sciti.es"
 __copyright__ = "2015, Rémi Louf"
@@ -25,3 +24,6 @@ from marble.classes import *
 
 import marble.neighbourhoods
 from marble.neighbourhoods import *
+
+import marble.clustering
+from marble.clustering import *
