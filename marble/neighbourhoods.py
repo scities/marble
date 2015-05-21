@@ -136,7 +136,11 @@ def neighbourhoods(distribution, areal_units, classes=None):
         each represented by a list of areal unit)
         > {'class': [ [areal units in cluster i], ...]}
     """
-    neighbourhoods = {}
+
+    # Regroup into classes if specified. Otherwise return categories indicated
+    # in the data
+    if not classes:
+       classes = return_categories(distribution) 
 
     ## Find the areal units where classes are overrepresented
     or_units = overrepresented_units(distribution, classes)
@@ -144,6 +148,11 @@ def neighbourhoods(distribution, areal_units, classes=None):
     ## Compute the adjacency list
     adjacency = _adjacency(areal_units)
 
+    ## Extract neighbourhooods as connected components
+    G = nx.from_dict_of_lists(adjacency) # Graph from adjacency
+    neighbourhoods = {cl: [list(subgraph) for subgraph in
+                            nx.connected_component_subgraphs(G.subgraph(or_units[cl]))]
+                        for cl in classes}
 
     return neighbourhoods
 
