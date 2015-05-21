@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """dissimilarity.py
 
-Compute the dissmilarity index between the different categories, as well as the
-absolute dissimilarity, that we call evenness.
+Compute the dissmilarity index between the different categories.
 """
 from __future__ import division
 
@@ -25,17 +24,6 @@ def _pair_dissimilarity(distribution, N_class, alpha, beta):
     return 0.5*sum([ abs( dist[alpha] / N_class[alpha] - 
                           dist[beta] / N_class[beta] )
                     for t,dist in distribution.iteritems()])
-
-
-def _single_evenness(distribution, alpha, N_unit, N_class, N_tot):
-    norm = 1 / (2* (1 - (N_class[alpha]/N_tot)))
-    evenness = norm*sum([abs( dist[alpha] / N_class[alpha] -
-                              N_unit[t] / N_tot) 
-                        for t,dist in distribution.iteritems()])
-
-    return evenness
-
-
 
 
 #
