@@ -5,6 +5,7 @@ Scripts to extract the areal units where the different classes are
 over-represented, and cluster the areal units that have common boundaries.
 """
 import math
+import shapely
 
 import marble as mb
 from common import (regroup_per_class,
@@ -13,12 +14,41 @@ from common import (regroup_per_class,
 
 
 __all__ = ["overrepresented_units",
-           "neighbourhoods"]
+           "neighbourhoods",
+           "clustering"]
 
 
 #
 # Helper functions
 #
+def _adjacency(areal_units)
+    """ Compute the adjacency matrix of areal units
+
+    Two areal units are said adjacent if their repective boundaries touch one
+    another (see shapely's `touch` function for more information).
+
+    Parameter
+    ---------
+
+    areal_units: dictionary
+        Dictionnary of areal unit ids with shapely polygon object representing
+        the unit's geometry as values.
+
+    Returns
+    -------
+
+    adjacency: dictionary
+    """
+
+    ## Compute adjacency list
+    adjacency = {a:[] for a in areal_units}
+    for a0,a1 in itertools.permutations(areal_units, 2):
+        if blocks[a1].touches(areal_units[a0]):
+            adjacency[a0].append(a1)
+
+    return adjacency
+
+
 
 
 #
@@ -51,7 +81,7 @@ def overrepresented_units(distribution, classes=None):
     Returns
     -------
 
-    areal_units: dictionary of lists
+    units: dictionary of lists
         Dictionnary of classes, with the list of areal units where this class is
         overrepresented with 99% confidence.
         > {class:[list of areal units]}
@@ -71,7 +101,6 @@ def overrepresented_units(distribution, classes=None):
                     for cl in classes}
 
     return areal_units
-
 
 
 
@@ -111,3 +140,37 @@ def neighbourhoods(distribution, areal_units, classes=None):
     or_units = overrepresented_units(distribution, classes)
 
     return neighbourhoods
+
+
+
+def clustering(distribution, areal_units, classes=None):
+    """ Return the clustering coefficient for the different classes
+    
+    [Add the definition of clustering here]
+
+    Parameter
+    ---------
+
+    distribution: nested dictionaries
+        Number of people per class, per areal unit as given in the raw data
+        (ungrouped). The dictionary must have the following formatting:
+        > {areal_id: {class_id: number}}
+
+    areal_units: dictionnary
+        Dictionnary of areal unit ids with shapely polygon object representing
+        the unit's geometry as values.
+
+    classes: dictionary of lists
+        When the original categories need to be aggregated into different
+        classes. 
+        > {class: [categories belonging to this class]}
+        This can be arbitrarily imposed, or computed with uncover_classes
+        function of this package.
+
+    Returns
+    -------
+
+    clustering: dictionary
+        Dictionary of classes names with clustering values.
+    """
+    return
