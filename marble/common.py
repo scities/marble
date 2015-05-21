@@ -5,6 +5,11 @@ Contains basic functions that are shared throughout the module
 """
 
 
+
+__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
+
+
+
 def compute_totals(distribution, classes):
     "Compute the number of individuals per class, per unit and in total"
     N_unit = {au:sum([distribution[au][cl] for cl in classes]) for au in distribution}

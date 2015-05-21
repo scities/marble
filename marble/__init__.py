@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Marble: analyse social stratification in cities"""
+"""Marble: analyse population stratification in cities"""
 from __future__ import absolute_import
 
+
+
 __author__ = "Rémi Louf"
-__email__ = "remilouf@sciti.es"
+__email__ = "remi.louf@sciti.es"
 __website__ = "www.sciti.es"
 __copyright__ = "2015, Rémi Louf"
+
 
 
 import marble.representation

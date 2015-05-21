@@ -14,6 +14,9 @@ from common import (regroup_per_class,
                    compute_totals)
 
 
+
+__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
+
 __all__ = ['representation']
 
 

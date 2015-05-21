@@ -8,8 +8,13 @@ from __future__ import division
 import copy
 import math
 import csv
+
 from common import (compute_totals,
                     return_categories)
+
+
+
+__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
 
 __all__ = ['cluster_categories',
             'uncover_classes']

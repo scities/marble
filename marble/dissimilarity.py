@@ -13,9 +13,9 @@ from common import (regroup_per_class,
 
 
 
+__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
 
 __all__ = ['dissimilarity']
-
 
 
 
@@ -89,5 +89,6 @@ def dissimilarity(distribution, classes=None):
         for c1 in dissimilarity[c0].iterkeys():
             if c0 not in dissimilarity[c1]:
                 dissimilarity[c1][c0] = dissimilarity[c0][c1]
+
 
     return dissimilarity

@@ -15,8 +15,9 @@ from common import (regroup_per_class,
 
 
 
-__all__ = ["exposure"]
+__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
 
+__all__ = ["exposure"]
 
 
 

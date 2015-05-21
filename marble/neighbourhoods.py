@@ -14,11 +14,14 @@ from common import (regroup_per_class,
                    return_categories,
                    compute_totals)
 
-__authors__ = """\t""".join(["Rémi Louf <remi.louf@sciti.es>"])
+
+
+__author__ = """\t""".join(["Rémi Louf <remi.louf@sciti.es>"])
 
 __all__ = ["overrepresented_units",
            "neighbourhoods",
            "clustering"]
+
 
 
 #
