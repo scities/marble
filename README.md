@@ -1,6 +1,14 @@
 # Marble
 
-Library to analyse social stratification in metropolitan areas.
+Library to analyse (social) segregation.
+
+If you find this code useful in your research, please let me
+know. **If you use marble in a publication, please cite** 
+
+[]
+
+**and link to
+http://github.com/scities/marble** Please also send me a reference to the paper, I will advertise it on the library's [webpage](http://scities.github.io/marble).
 
 ## Features
 
@@ -33,6 +41,5 @@ Library to analyse social stratification in metropolitan areas.
 
 ## License and authors
 
-License: GPL v.2  
-Author: Rémi Louf <remilouf@sciti.es>  
-Website: [Scities](http://www.sciti.es)
+Author: Rémi Louf <remi.louf@sciti.es>  
+License: BSD 
