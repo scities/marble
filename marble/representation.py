@@ -21,18 +21,18 @@ __all__ = ['representation']
 #
 # Helper functions
 #
-def single_representation(n, n_unit, N_class, N_tot):
+def single_representation(n, N_au, N_class, N_tot):
     "Compute the representation of a population in a given areal unit"
     if N_class != 0 and n_unit != 0:
-        return (n/n_unit) / (N_class/N_tot)
+        return (n/N_au) / (N_class/N_tot)
     else:
         return float('nan') 
 
 
-def single_variance(n_unit, N_class, N_tot):
+def single_variance(N_au, N_class, N_tot):
     "Compute the standard deviation in a given areal unit"
-    if N_class != 0 and n_unit != 0:
-        return (1/N_class)*((N_tot/n_unit)-1)
+    if N_class != 0 and N_au != 0:
+        return (1/N_class)*((N_tot/N_au)-1)
     else:
         return float('nan')
 
