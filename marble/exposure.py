@@ -36,9 +36,8 @@ def unit_variance(N_tot, N_au, N_alpha, N_beta):
     "Compute the variance of E_{\alpha \beta}(t)" 
     if N_alpha == 0 or N_beta == 0:
         return float('nan')
-        print 'oops'
     if N_au == 0:
-        return 0#float('nan') 
+        return 0
     else:
         var = (1./(N_alpha*N_beta)) * ((N_tot/N_au)-1)**2 \
                 + (1./N_alpha) * ((N_tot/N_au)-1) \
@@ -114,21 +113,22 @@ def exposure(distribution, classes=None):
         Matrix of exposures between categories.
         > {class_id0: {class_id1: (exposure_01, variance null model)}} 
     """
-    # Regroup into classes if specified. Otherwise return categories indicated
-    # in the data
+    ## Regroup into classes if specified.
     if classes:
         distribution = regroup_per_class(distribution, classes)
     else:
        classes = return_categories(distribution) 
 
 
-    # Compute the total numbers per class and per areal unit 
+    ## Compute the total numbers per class and per areal unit 
     N_unit, N_class, N_tot = compute_totals(distribution, classes) 
 
-    # Compute representation for all areal unit
+
+    ## Compute representation for all areal unit
     representation = mb.representation(distribution)
 
-    # Compute the exposure matrix
+
+    ## Compute the exposure matrix
     # Only half of the values are computed (the matrix is symmetric)
     exposure = collections.defaultdict(dict)
     for alpha, beta in itertools.combinations_with_replacement(classes, 2):
