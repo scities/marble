@@ -4,6 +4,7 @@
 Scripts to extract the areal units where the different classes are
 over-represented, and cluster the areal units that have common boundaries.
 """
+from __future__ import division
 import math
 import shapely
 import networkx as nx
@@ -49,6 +50,28 @@ def _adjacency(areal_units)
             adjacency[a0].append(a1)
 
     return adjacency
+
+
+def _single_clustering(Nu, Nc):
+    """Compute clustering index
+    
+    Parameters
+    ----------
+    Nu: int
+        Number of units
+    Nc: int
+        Number of clusters
+        
+    Returns
+    -------
+    clust: float
+        0 if units are not clustered (checkerboard)
+        1 if units form a single cluster
+    """
+    clust = 1 - ( ((Nc/Nu) - (1/Nu)) /
+                  (1 - (1/Nu)) ) 
+
+    return clust
 
 
 
@@ -188,4 +211,26 @@ def clustering(distribution, areal_units, classes=None):
     clustering: dictionary
         Dictionary of classes names with clustering values.
     """
-    return
+    
+    ## Get the number of neighbourhoods
+    neigh = neighbourhoods(distribution, areal_units, classes)
+    num_neigh = {cl: len(neighbourhoods[cl]) for cl in classes}
+    num_units = {cl: len([a for neigh in neighbourhoods[cl] for a in neigh])
+                    for cl in classes}
+
+    ## Compute clustering values
+    clustering = {}
+    for cl in classes:
+        if len(num_units[cl]) == 0:
+            clustering[cl] = float('nan')
+        elif len(num_units[cl]) == 1:
+            clustering[cl] = 1
+        else:
+            clustering[cl] = _single_clustering(num_units[cl],
+                                                num_neigh[cl])
+
+            clust = num_neighbourhoods[cl] / len(over_bg[cl])
+            clustering[cl] = 1 - ((clust-(1/len(over_bg[cl]))) / 
+                                    (1-(1/len(over_bg[cl]))))
+
+    return clustering
