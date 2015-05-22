@@ -6,7 +6,7 @@ Contains basic functions that are shared throughout the module
 
 
 
-__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
+__author__ = """\t""".join(["Rémi Louf <remi.louf@sciti.es>"])
 
 
 

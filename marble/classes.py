@@ -14,7 +14,7 @@ from common import (compute_totals,
 
 
 
-__author__ = """\t""".join["Rémi Louf <remi.louf@sciti.es>"]
+__author__ = """\t""".join(["Rémi Louf <remi.louf@sciti.es>"])
 
 __all__ = ['cluster_categories',
             'uncover_classes']
