@@ -72,7 +72,7 @@ def dissimilarity(distribution, classes=None):
 
 
     ## Compute total numbers of individuals per class and areal unit
-    N_unit, N_class, N_tot = compute_totals(distribution) 
+    N_unit, N_class, N_tot = compute_totals(distribution, classes) 
 
 
     ## Compute the dissimilarity matrix
