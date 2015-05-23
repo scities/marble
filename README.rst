@@ -1,4 +1,5 @@
-# Marble
+Marble
+======
 
 Library to analyse (social) segregation.
 
@@ -9,11 +10,12 @@ know. **If you use marble in a publication, please cite**
 
 **and link to
 http://github.com/scities/marble** Please also send me a reference to the paper, I will advertise it on the library's [webpage](http://scities.github.io/marble).
+--------
+Features
+--------
 
-## Features
-
-### Traditional measures
-
+Traditional measures
+---------------------
 <dl>
     <dt>Dissimilarity</dt>
     <dd>Compute the dissimilarity between different categories.</dd>
@@ -22,8 +24,8 @@ http://github.com/scities/marble** Please also send me a reference to the paper,
     categories.</dd> 
 </dl>
 
-### Interaction
-
+Interaction
+-----------
 <dl>
     <dt>Exposure</dt>
     <dd>The extent to which two categories tend to live in the same areal units.
@@ -34,12 +36,14 @@ http://github.com/scities/marble** Please also send me a reference to the paper,
     the different categories</dd>
 </dl>
 
-### Neighbourhoods
-
+Neighbourhoods
+--------------
 + Areal units where the categories are over-represented
 + Obtain neighbourhoods by clustering areal units
 
-## License and authors
+--------------------
+License and authors
+-------------------
 
 Author: Rémi Louf <remi.louf@sciti.es>  
 License: BSD 
