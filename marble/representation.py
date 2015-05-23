@@ -26,7 +26,7 @@ __all__ = ['representation']
 #
 def single_representation(n, N_au, N_class, N_tot):
     "Compute the representation of a population in a given areal unit"
-    if N_class != 0 and n_unit != 0:
+    if N_class != 0 and N_au != 0:
         return (n/N_au) / (N_class/N_tot)
     else:
         return float('nan') 
