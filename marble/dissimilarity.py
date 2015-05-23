@@ -66,9 +66,9 @@ def dissimilarity(distribution, classes=None):
     """
     ## Regroup into classes if specified
     if classes is not None:
-        distribution = regroup_per_class(distibution, classes)
+        distribution = regroup_per_class(distribution, classes)
     else:
-        classes = return_categories(distibution)
+        classes = return_categories(distribution)
 
 
     ## Compute total numbers of individuals per class and areal unit
