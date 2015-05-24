@@ -1,5 +1,5 @@
 Marble
-======
+=======
 
 Library to analyse (social) segregation.
 
@@ -10,12 +10,13 @@ know. **If you use marble in a publication, please cite**
 
 **and link to
 http://github.com/scities/marble** Please also send me a reference to the paper, I will advertise it on the library's [webpage](http://scities.github.io/marble).
---------
+
+
 Features
---------
+---------
 
 Traditional measures
----------------------
+----------------------
 <dl>
     <dt>Dissimilarity</dt>
     <dd>Compute the dissimilarity between different categories.</dd>
