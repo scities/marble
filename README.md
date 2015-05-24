@@ -23,7 +23,15 @@ If you find this code useful in your research, please let me know!
 If you use marble in a publication, please cite
 
 ```
-R. Louf & M. Barthelemy, "" (2015)
+@article{louf2015,
+  title={},
+  author={Louf, R\'emi and Barthelemy, Marc},
+  journal={},
+  volume={},
+  pages={},
+  year={2015},
+  publisher={}
+}
 ```
 
 and link to the [repository](http://github.com/scities/marble). Please send me a reference to the paper, I will advertise it on the [website](http://scities.github.io/marble).
