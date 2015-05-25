@@ -47,8 +47,7 @@ def _find_friends(E, N_class):
     for c0 in E_norm:
         for c1, e in E_norm[c0].iteritems():
             if e>1:
-                max_e = sum(N_class.values())*(N_class[c0]+N_class[c1]) \
-                         / (4*N_class[c0]*N_class[c1])
+                max_e = sum(N_class.values()) / (N_class[c0]+N_class[c1]) 
                 E_norm[c0][c1] = 1 + (e-1)/(max_e-1) 
 
 
@@ -64,7 +63,6 @@ def _find_friends(E, N_class):
                           for c1, val in subdict.iteritems()], 
                           key=lambda x:x[2])[:2]
 
-    print alpha, beta
     return alpha, beta
 
 
