@@ -9,7 +9,7 @@ import marble as mb
 # Synthetic data for tests
 #
 def uniform_city():
-    """ Uniform repartition """
+    """ Uniform representation """
     city = {"A":{1:1, 2:10, 3:7},
             "B":{1:2, 2:20, 3:14},
             "C":{1:4, 2:40, 3:28}}
