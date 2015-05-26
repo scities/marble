@@ -46,10 +46,12 @@ def _adjacency(areal_units):
     """
 
     ## Compute adjacency list
+    ## Units adjacent if they share a border (line)
     adjacency = {a:[] for a in areal_units}
     for a0,a1 in itertools.permutations(areal_units, 2):
-        if blocks[a1].touches(areal_units[a0]):
+        if (tracts[a0].intersection(tracts[a1])).geom_type == 'LineString': 
             adjacency[a0].append(a1)
+            adjacency[a1].append(a0)
 
     return adjacency
 
