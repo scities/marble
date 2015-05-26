@@ -1,6 +1,10 @@
 site_name: Marble
 pages:
-  - [index.md, Home]
-  - [about.md, About]
-theme: yeti
+  - ['index.md', Home]
+  - ['about/credits.md', About, Credits] 
+  - ['about/contribute.md', About, Contribute]
+  - ['about/license.md', About, License]
+theme: simplex
 repo_url: https://github.com/scities/marble
+markdown_extensions:
+    - fenced_code

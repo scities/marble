@@ -1,13 +1,22 @@
-# Welcome to MkDocs
+# Marble
 
-For full documentation visit [mkdocs.org](http://mkdocs.org).
+Study residential segregation, with Python.
 
-## Commands
+<div id="check"></div>
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+### Features
+
+* Open source (BSD)
+
+## Measures implemented
+
+* `representation` - Compute the representation of categories in areal units.
+* `exposure` - Compute the exposure and isolation of categories.
+* `uncover_classes` - Regroup categories in classes based on their spatial
+  pattern of interactions.
+* `neighbourhoods` - Find the neighbourhoods where categories cluster.
+* `clustering` -  Compute the clustering index of categories.
+* `dissmilarity` - Compute the (traditional) dissimilarity index.
 
 ## Project layout
 
