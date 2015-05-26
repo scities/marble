@@ -1,0 +1,5 @@
+site_name: Marble
+pages:
+  - [index.md, Home]
+  - [about.md, About]
+theme: readthedocs
