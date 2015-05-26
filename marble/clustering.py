@@ -81,26 +81,29 @@ def clustering(distribution, areal_units, classes=None):
     clustering: dictionary
         Dictionary of classes names with clustering values.
     """
+
+    # Regroup into classes if specified. Otherwise return categories indicated
+    # in the data
+    if not classes:
+       classes = return_categories(distribution) 
     
     ## Get the number of neighbourhoods
     neigh = mb.neighbourhoods(distribution, areal_units, classes)
-    num_neigh = {cl: len(neighbourhoods[cl]) for cl in classes}
-    num_units = {cl: len([a for neigh in neighbourhoods[cl] for a in neigh])
+    num_neigh = {cl: len(neigh[cl]) for cl in classes}
+    num_units = {cl: len([a for ne in neigh[cl] for a in ne])
                     for cl in classes}
 
     ## Compute clustering values
     clustering = {}
     for cl in classes:
-        if len(num_units[cl]) == 0:
+        if num_units[cl] == 0:
             clustering[cl] = float('nan')
-        elif len(num_units[cl]) == 1:
+        elif num_units[cl] == 1:
             clustering[cl] = 1
         else:
             clustering[cl] = _single_clustering(num_units[cl],
                                                 num_neigh[cl])
 
-            clust = num_neighbourhoods[cl] / len(over_bg[cl])
-            clustering[cl] = 1 - ((clust-(1/len(over_bg[cl]))) / 
-                                    (1-(1/len(over_bg[cl]))))
-
+            clustering[cl] = ((num_neigh[cl] - num_units[cl]) /
+                              (1 - num_units[cl]))
     return clustering
