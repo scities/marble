@@ -2,4 +2,5 @@ site_name: Marble
 pages:
   - [index.md, Home]
   - [about.md, About]
-theme: readthedocs
+theme: yeti
+repo_url: https://github.com/scities/marble
