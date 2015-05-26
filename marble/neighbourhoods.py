@@ -7,6 +7,7 @@ over-represented, and cluster the areal units that have common boundaries.
 from __future__ import division
 import math
 import shapely
+import itertools
 import networkx as nx
 
 import marble as mb
@@ -49,7 +50,7 @@ def _adjacency(areal_units):
     ## Units adjacent if they share a border (line)
     adjacency = {a:[] for a in areal_units}
     for a0,a1 in itertools.permutations(areal_units, 2):
-        if (tracts[a0].intersection(tracts[a1])).geom_type == 'LineString': 
+        if (areal_units[a0].intersection(areal_units[a1])).geom_type == 'LineString': 
             adjacency[a0].append(a1)
             adjacency[a1].append(a0)
 
