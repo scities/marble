@@ -1,5 +1,7 @@
 # Marble
 
+[![Coverage Status](https://coveralls.io/repos/scities/marble/badge.svg)](https://coveralls.io/r/scities/marble)
+
 Study residential segregation, explore its different dimensions.
 
 * Measure the attraction/repulsion of the different categories
