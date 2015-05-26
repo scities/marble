@@ -56,8 +56,23 @@
             
             
             
-                <li >
-                    <a href="about/">About</a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="about/credits/">Credits</a>
+                        </li>
+                    
+                        <li >
+                            <a href="about/contribute/">Contribute</a>
+                        </li>
+                    
+                        <li >
+                            <a href="about/license/">License</a>
+                        </li>
+                    
+                    </ul>
                 </li>
             
             
@@ -72,7 +87,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="about/">
+                    <a rel="prev" href="about/credits/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -95,9 +110,11 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#welcome-to-mkdocs">Welcome to MkDocs</a></li>
+        <li class="main active"><a href="#marble">Marble</a></li>
         
-            <li><a href="#commands">Commands</a></li>
+            <li><a href="#features">Features</a></li>
+        
+            <li><a href="#measures-implemented">Measures implemented</a></li>
         
             <li><a href="#project-layout">Project layout</a></li>
         
@@ -108,14 +125,23 @@
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="http://mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+<h1 id="marble">Marble</h1>
+<p>Study residential segregation, with Python.</p>
+<div id="check"></div>
+
+<h3 id="features">Features</h3>
 <ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs help</code> - Print this help message.</li>
+<li>Open source (BSD)</li>
+</ul>
+<h2 id="measures-implemented">Measures implemented</h2>
+<ul>
+<li><code>representation</code> - Compute the representation of categories in areal units.</li>
+<li><code>exposure</code> - Compute the exposure and isolation of categories.</li>
+<li><code>uncover_classes</code> - Regroup categories in classes based on their spatial
+  pattern of interactions.</li>
+<li><code>neighbourhoods</code> - Find the neighbourhoods where categories cluster.</li>
+<li><code>clustering</code> -  Compute the clustering index of categories.</li>
+<li><code>dissmilarity</code> - Compute the (traditional) dissimilarity index.</li>
 </ul>
 <h2 id="project-layout">Project layout</h2>
 <pre><code>mkdocs.yml    # The configuration file.
