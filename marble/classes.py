@@ -25,7 +25,7 @@ __all__ = ['cluster_categories',
 # Helper functions
 #
 def _aggregate_linkage(linkage, categories, ci_factor):
-    """ Aggregate until the M value is < than 1 
+    """ Aggregate until the M value is <= than 1 
     Categories are contained in linkage... """
 
     agg = [[c] for c in categories]
