@@ -1,10 +1,15 @@
 site_name: Marble
 pages:
   - ['index.md', Home]
+  - ['reference/representation.md', Reference, Representation]
+  - ['reference/interaction.md', Reference, Interactions]
+  - ['reference/classes.md', Reference, Classes]
+  - ['reference/neighbourhoods.md', Reference, Neighbourhoods]
+  - ['reference/evenness.md', Reference, (un)Evenness]
   - ['about/credits.md', About, Credits] 
   - ['about/contribute.md', About, Contribute]
   - ['about/license.md', About, License]
-theme: simplex
+theme: readthedocs
 repo_url: https://github.com/scities/marble
-markdown_extensions:
-    - fenced_code
+markdown_extensions: [fenced_code, admonition, mathjax]
+extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML','mathjaxconf.js']
