@@ -13,6 +13,8 @@ assessment of segregation.
 
 ## Measures
 
+----
+
 ### **concentration** (distribution, classes=*None*)
 
 The concentration measures the proportion of individuals from category $\alpha$
@@ -46,7 +48,7 @@ population areal units.
 > Returns a dictionary of dictionaries with  
 > concentration[areal_unit][category] = value
 
-
+----
 
 ### **proportion** (distribution, classes=*None*)
 
@@ -77,7 +79,7 @@ studied.
 > Returns a dictionary of dictionaries with  
 > proportion[areal_unit][category] = value
 
-
+--------
 
 ### **representation** (distribution, classes=*None*)
 
