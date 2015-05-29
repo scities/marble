@@ -1,1 +1,5 @@
 # Credits
+
+* Contributors to Shapely
+
+
