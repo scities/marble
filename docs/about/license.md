@@ -3,8 +3,7 @@
 
 Marble is distributed under the BSD license.
 
-
-```text
+```txt
 Copyright (c) 2015, Rémi Louf
 All rights reserved.
 
