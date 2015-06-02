@@ -53,6 +53,8 @@
                         
                             <li><a class="toctree-l4" href="#measures-implemented">Measures implemented</a></li>
                         
+                            <li><a class="toctree-l4" href="#install">Install</a></li>
+                        
                     
                     </ul>
                 
@@ -64,7 +66,12 @@
             <span>Reference</span>
             
                 <li class="toctree-l2 ">
-                    <a class="" href="reference/representation/">Representation</a>
+                    <a class="" href="reference/representation/">Presence</a>
+                    
+                </li>
+            
+                <li class="toctree-l2 ">
+                    <a class="" href="reference/neighbourhoods/">Neighbourhoods</a>
                     
                 </li>
             
@@ -74,12 +81,7 @@
                 </li>
             
                 <li class="toctree-l2 ">
-                    <a class="" href="reference/classes/">Classes</a>
-                    
-                </li>
-            
-                <li class="toctree-l2 ">
-                    <a class="" href="reference/neighbourhoods/">Neighbourhoods</a>
+                    <a class="" href="reference/classes/">Social stratification</a>
                     
                 </li>
             
@@ -152,9 +154,12 @@
 
 <h3 id="features">Features</h3>
 <ul>
-<li>Open source (BSD)</li>
+<li>Many measures implemented (see below for a peek)</li>
+<li>Inherits the simplicity of the python language</li>
+<li>Open source (<a href="about/license/">BSD license</a>)</li>
+<li>Leverage other python libraries for spatial analysis, statistics, and to plot
+  maps.</li>
 </ul>
-<p>Inline Latex <mathjax>$\alpha$</mathjax></p>
 <h3 id="measures-implemented">Measures implemented</h3>
 <ul>
 <li><a href="reference/representation/"><code>representation</code></a> - Compute the representation of categories in areal units.</li>
@@ -165,13 +170,26 @@
 <li><a href="reference/neighbourhoods/"><code>clustering</code></a> -  Compute the clustering index of categories.</li>
 <li><a href="reference/evenness/"><code>dissmilarity</code></a> - Compute the (traditional) dissimilarity index.</li>
 </ul>
+<h2 id="install">Install</h2>
+<h3 id="pypi-stable-version">Pypi (stable version)</h3>
+<p>You can install Marble via the Pypi repository. In a linux environment, type</p>
+<pre><code class="bash">sudo pip install marble
+</code></pre>
+
+<p>This should install Marble and its dependencies. You can now import Marble by
+typing</p>
+<pre><code class="python">import marble as mb
+</code></pre>
+
+<p>at the begining of your programs (or in the python interpreter).</p>
+<h3 id="github-development">Github (development)</h3>
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="reference/representation/" class="btn btn-neutral float-right" title="Representation"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="reference/representation/" class="btn btn-neutral float-right" title="Presence"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -207,7 +225,7 @@
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-05-28 20:12:22.379971
+Docs Build Date : 2015-06-02 11:50:10.189921
 -->
 </body>
 </html>
