@@ -111,9 +111,9 @@ we would like to know the areal units that depart form the random situation with
   2.57*\sigma_\alpha(t)
 
 !!! Beware
->    The knowledge of both $r_\alpha(t)$ and
->    $\mathrm{Var}\left[r_\alpha(t)\right]$ is necessary to speak of
->    *underrepresentation* or *overrepresentation*.
+    The knowledge of both $r_\alpha(t)$ and
+    $\mathrm{Var}\left[r_\alpha(t)\right]$ is necessary to speak of
+    *underrepresentation* or *overrepresentation*.
 
 **Parameters**
 
