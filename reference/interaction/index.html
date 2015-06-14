@@ -21,7 +21,7 @@
   <script src="../../js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="../../js/highlight.pack.js"></script>
   <script src="../../js/theme.js"></script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script src="../../mathjaxconf.js"></script> 
 
   
@@ -166,22 +166,23 @@ to which they interact with one another.</p>
 Puech to study the co-localisation of firms. In our case, it reads</p>
 <p><mathjax>$$E_{\alpha \beta} = \frac{1}{N} \sum_{t=1}^T n(t)\, r_\alpha(t)\, r_\beta(t)$$</mathjax></p>
 <p>Although it is not straightforward when written in this form,  the exposure
-is the average representation of \beta witnessed by the \alpha, or
-conversely the average representation of \alpha witnessed by the \beta. It is
+is the average representation of <mathjax>$\beta$</mathjax> witnessed by the <mathjax>$\alpha$</mathjax>, or
+conversely the average representation of \alpha witnessed by the <mathjax>$\beta$</mathjax>. It is
 independent of the city's overall inequality levels.</p>
-<p>In the unsegregated city, the exposure is equal on average to</p>
+<p>In the unsegregated configuration, the exposure is equal on average to</p>
 <p><mathjax>$$\mathrm{E} \left [E_{\alpha \beta} \right] = 1$$</mathjax></p>
 <p>In other words, the diferent categories are indifferent to one another. The
-variance of the exposure is given, in the unsegregated city, by</p>
-<p><mathjax>$$\mathrm{Var} \left[E_{\alpha \beta}\right] = $$</mathjax></p>
+variance of the exposure in the unsegregated configuration,  <mathjax>$\mathrm{Var}(E_{\alpha \beta})$</mathjax>, can also be computed
+analytically.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>distribution</code>  dictionary<blockquote>
-<p>{areal unit: {category: number of individuals}}</p>
+<p>Takes a dictionary of dictionaries with<br />
+distribution[areal_unit][category] = number </p>
 </blockquote>
 </li>
 <li><code>classes</code> dictionary, optional<blockquote>
-<p>{class: [categories]}<br />
+<p>Takes a dictionary of lists with classes[class] = [cat1, cat2, ...]<br />
 If not specified, the algorithm will use the categories found in
 <code>distribution</code></p>
 </blockquote>
@@ -191,7 +192,7 @@ If not specified, the algorithm will use the categories found in
 <ul>
 <li><code>exposure</code> <blockquote>
 <p>Returns a dictionary of dictionaries with<br />
-exposure[alpha][beta] = (E_{\alpha \beta}, Var(E_{\alpha \beta})</p>
+exposure[alpha][beta] = (<mathjax>$\mathrm{E}_{\alpha \beta}$</mathjax>, <mathjax>$\mathrm{Var}(E_{\alpha \beta})$</mathjax>)</p>
 </blockquote>
 </li>
 </ul>
@@ -202,10 +203,9 @@ fictional region with two areal units A and B.</p>
 <pre><code class="python">&gt;&gt;&gt; import marble as mb
 &gt;&gt;&gt; city = {&quot;A&quot;:{0: 10, 1:0, 2:23},
           &quot;B&quot;:{0: 0, 1:10, 2:8}}
-&gt;&gt;&gt; mb.exposure(city)
-{0: {0: , 1:, 2:},
- 1: {0: , 1:, 2:},
- 2: {0: , 1:, 2:}}
+&gt;&gt;&gt; exp = mb.exposure(city)
+&gt;&gt;&gt; exp[0][1] # Value of the exposure between cat. 0 and 1
+(0, 0.01)
 </code></pre>
 
 <p>Now, imagine that for some reason, you have found that the original categories
@@ -216,9 +216,9 @@ second, that is composed of categories 1 and 2.</p>
           &quot;B&quot;:{0: 0, 1:10, 2:8}}
 &gt;&gt;&gt; classes = {'first': [0], 
              'second': [1,2]}
-&gt;&gt;&gt; mb.exposure(city, classes)
-{'first':{'first':, 'second': },
-'second': {'first':, 'second':}}
+&gt;&gt;&gt; exp = mb.exposure(city, classes)
+&gt;&gt;&gt; exp['first']['second']
+(0.867, 0.002)
 </code></pre>
             </div>
           </div>
@@ -264,7 +264,7 @@ second, that is composed of categories 1 and 2.</p>
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-02 11:51:22.185541
+Docs Build Date : 2015-06-14 21:15:02.984082
 -->
 </body>
 </html>

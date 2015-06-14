@@ -21,7 +21,7 @@
   <script src="../../js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="../../js/highlight.pack.js"></script>
   <script src="../../js/theme.js"></script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script src="../../mathjaxconf.js"></script> 
 
   
@@ -63,6 +63,12 @@
                         <ul>
                         
                             <li class="toctree-l3"><a href="#neighbourhoods">Neighbourhoods</a></li>
+                            
+                                <li><a class="toctree-l4" href="#introduction">Introduction</a></li>
+                            
+                                <li><a class="toctree-l4" href="#measures">Measures</a></li>
+                            
+                                <li><a class="toctree-l4" href="#examples">Examples</a></li>
                             
                         
                         </ul>
@@ -146,7 +152,123 @@
 </div>
           <div role="main">
             <div class="section">
-              <h2 id="neighbourhoods">Neighbourhoods</h2>
+              <h1 id="neighbourhoods">Neighbourhoods</h1>
+<h2 id="introduction">Introduction</h2>
+<p><a href="../representation/">Representation</a> allows us to determine whether a category is over-, under- or
+normally represented in the different areal units. We simply define
+neighbourhoods as the areal units where the different categories are
+over-represented.</p>
+<h2 id="measures">Measures</h2>
+<hr />
+<h3 id="overrepresented_units-distribution-classesnone"><strong>overrepresented_units</strong> (distribution, classes=<em>None</em>)</h3>
+<p>This functions outputs, for each category, a list of areal units where this
+category is overrepresented.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>distribution</code>  dictionary<blockquote>
+<p>Takes a dictionary of dictionaries with<br />
+distribution[areal_unit][category] = number </p>
+</blockquote>
+</li>
+<li><code>classes</code> dictionary, optional<blockquote>
+<p>Takes a dictionary of lists with classes[class] = [cat1, cat2, ...]<br />
+If not specified, the algorithm will use the categories found in
+<code>distribution</code></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><code>units</code> dictionary<blockquote>
+<p>Returns a dictionary of lists with<br />
+units[category] = [unit1, ..., unitN]</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h3 id="neighbourhoods-distribution-areal_units-classesnone"><strong>neighbourhoods</strong> (distribution, areal_units, classes=<em>None</em>)</h3>
+<p>This function takes the distribution of income and the areal units' shape (as a
+<a href="http://toblerity.org/shapely/manual.html">Shapely Polygon object</a> and outputs the clusters where the different categories
+are overrepresented, or neighbourhoods. </p>
+<p>Two areal units are said to belong to the same cluster if they are contiguous,
+i.e. if the intersection of their respective perimeter is a line.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>distribution</code>  dictionary<blockquote>
+<p>Takes a dictionary of dictionaries with<br />
+distribution[unit_id][category] = number </p>
+</blockquote>
+</li>
+<li><code>areal_units</code> dictionary<blockquote>
+<p>Takes a dictionary of <a href="http://toblerity.org/shapely/manual.html">Shapely Polygon objects</a> with <br />
+areal_units[unit_id] = areal_unit_polygon_object</p>
+</blockquote>
+</li>
+<li><code>classes</code> dictionary, optional<blockquote>
+<p>Takes a dictionary of lists with classes[class] = [cat1, cat2, ...]<br />
+If not specified, the algorithm will use the categories found in
+<code>distribution</code></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><code>neighbourhoods</code> dictionary<blockquote>
+<p>Returns a dictionary of lists of lists with<br />
+neighbourhoods[category] = [[unit in cluster1], ..., [units in cluster N]]</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p>Let us look in the following example at how to extract the neighbourhoods from
+the distribution of individuals from different categories using Marble, and plot
+a map of the city showing the units where category 1 is overrepresented using
+matplotlib.</p>
+<p>We assume that the distribution is contained in the variable <code>city</code>. The shape
+of the areal units are contained in a shapefile located at
+<code>path/to/areal_units.shp</code>.</p>
+<pre><code class="python">import fiona
+from shapely.geometry import shape
+
+units = {}
+with fiona.open('path/to/areal_units.shp', 'r', 'ESRI Shapefile') as source:
+    for f in source:
+       units[f['properties']['ID_FIELD']] = shape(f['geometry'])
+</code></pre>
+
+<p>This imports the areal units as <a href="http://toblerity.org/shapely/manual.html">Shapely Polygon Objects</a> and store them in the variable <code>units</code>.</p>
+<pre><code class="python">import marble as mb
+
+overrepresented = mb.overrepresented_units(city)
+</code></pre>
+
+<p>This finds the areal units where the different categories are overrepresented.</p>
+<pre><code class="python">from maptlotlib import pylab as plt
+from descartes import PolygonPatch
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+for au in units:
+    color = 'white'
+    if au in overrepresented[1]:
+        color = 'black' # Plot in black the units where 0 is overrepresented
+    if units[au].geom_type==&quot;Polygon&quot;:
+        patch = PolygonPatch(units[au], fc=color, ec='None', alpha=1, zorder=1)
+        ax.add_patch(patch)
+    else:
+        for t in units[au]:
+            patch = PolygonPatch(t, fc=color, ec='None', alpha=1, zorder=1)
+            ax.add_patch(patch)
+
+ax.relim()
+ax.axis('off')
+ax.autoscale_view(True,True,True)
+plt.show()
+</code></pre>
+
+<p>This plots the areal units where individuals belonging to category 1 are
+overrepresented in black, and the others in white.</p>
             </div>
           </div>
           <footer>
@@ -191,7 +313,7 @@
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-02 11:51:22.178168
+Docs Build Date : 2015-06-14 21:15:02.975977
 -->
 </body>
 </html>

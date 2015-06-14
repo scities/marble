@@ -21,7 +21,7 @@
   <script src="../../js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="../../js/highlight.pack.js"></script>
   <script src="../../js/theme.js"></script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script src="../../mathjaxconf.js"></script> 
 
   
@@ -239,7 +239,7 @@ spatially distributed at random. The properties of such a `random', unsegregated
 city are however well known, and the distribution of categories in each areal
 unit is given by a binomial distribution. The representation is thus defined as
 the number <mathjax>$n_\alpha(t)$</mathjax> divided by its expected value in an unsegregated city</p>
-<p><mathjax>$$r_\alpha(t) \frac{n_\alpha(t) / n(t)}{N_\alpha / N} $$</mathjax></p>
+<p><mathjax>$$r_\alpha(t) = \frac{n_\alpha(t) / n(t)}{N_\alpha / N} $$</mathjax></p>
 <p>In the perfectly unsegregated city (number of individuals equal to the mean of
 the binomial distribution), <mathjax>$r_\alpha = 1$</mathjax>. Of course, there always is a
 possibility for any situation that it has been obtained by chance. Given the
@@ -250,24 +250,22 @@ we first compute the variance:</p>
 <p>we would like to know the areal units that depart form the random situation with
 99% confidence. Therefore, we will say that  </p>
 <ul>
-<li><mathjax>$\alpha$</mathjax> is overrepresented in <mathjax>$t$</mathjax> iff $r_\alpha(t) &gt; 1 +
-  2.57*\sigma_\alpha(t)</li>
-<li><mathjax>$\alpha$</mathjax> is underrepresented in <mathjax>$t$</mathjax> iff $r_\alpha(t) &lt; 1 +
-  2.57*\sigma_\alpha(t)</li>
+<li><mathjax>$\alpha$</mathjax> is overrepresented in <mathjax>$t$</mathjax> iff <mathjax>$r_\alpha(t) &gt; 1 +
+  2.57\,*\sigma_\alpha(t)$</mathjax></li>
+<li><mathjax>$\alpha$</mathjax> is underrepresented in <mathjax>$t$</mathjax> iff <mathjax>$r_\alpha(t) &lt; 1 +
+  2.57\,\sigma_\alpha(t)$</mathjax></li>
 </ul>
 <div class="admonition beware">
 <p class="admonition-title">Beware</p>
-</div>
-<blockquote>
 <p>The knowledge of both <mathjax>$r_\alpha(t)$</mathjax> and
-   <mathjax>$\mathrm{Var}\left[r_\alpha(t)\right]$</mathjax> is necessary to speak of
-   <em>underrepresentation</em> or <em>overrepresentation</em>.</p>
-</blockquote>
+<mathjax>$\mathrm{Var}\left[r_\alpha(t)\right]$</mathjax> is necessary to speak of
+<em>underrepresentation</em> or <em>overrepresentation</em>.</p>
+</div>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>distribution</code>  dictionary<blockquote>
-<p>Takes a dictionary of dictionaries with distribution[areal_unit][category] =
-number </p>
+<p>Takes a dictionary of dictionaries with<br />
+distribution[areal_unit][category] = number </p>
 </blockquote>
 </li>
 <li><code>classes</code> dictionary, optional<blockquote>
@@ -287,6 +285,23 @@ representation[areal_unit][category] = (<mathjax>$r_\alpha(t)$</mathjax>,
 </li>
 </ul>
 <h2 id="examples">Examples</h2>
+<p>Let us look at how to compute the concentration, proportion and representation for the categories 0, 1 and 2 in a
+fictional region with two areal units A and B.</p>
+<pre><code class="python">&gt;&gt;&gt; import marble as mb
+&gt;&gt;&gt; city = {&quot;A&quot;:{0: 10, 1:0, 2:23},
+          &quot;B&quot;:{0: 0, 1:10, 2:8}}
+&gt;&gt;&gt; co = mb.concentration(city)
+&gt;&gt;&gt; print co['A'][0]
+1.0
+
+&gt;&gt;&gt; pr = mb.proportion(city)
+&gt;&gt;&gt; print pr['A'][0]
+0.303
+
+&gt;&gt;&gt; rep = mb.representation(city)
+&gt;&gt;&gt; print rep['A'][0]
+(1.55, 0.054)
+</code></pre>
             </div>
           </div>
           <footer>
@@ -331,7 +346,7 @@ representation[areal_unit][category] = (<mathjax>$r_\alpha(t)$</mathjax>,
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-02 11:51:22.176219
+Docs Build Date : 2015-06-14 21:15:02.964481
 -->
 </body>
 </html>
