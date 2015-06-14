@@ -29,7 +29,7 @@ __all__ = ['concentration',
 def single_concentration(n, N_class):
     "Compute the concentration of a population in a given areal unit"
     if N_class != 0:
-        return (n/N_clas)
+        return (n/N_class)
     else:
         return float('nan') 
 
