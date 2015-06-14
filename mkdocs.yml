@@ -12,4 +12,4 @@ pages:
 theme: readthedocs
 repo_url: https://github.com/scities/marble
 markdown_extensions: [fenced_code, admonition, mathjax]
-extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML','mathjaxconf.js']
+extra_javascript: ['http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML', 'mathjaxconf.js']
