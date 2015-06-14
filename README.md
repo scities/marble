@@ -26,8 +26,8 @@ If you find this code useful in your research, please let me know!
 If you use marble in a publication, please cite
 
 ```
-@article{louf2015,
-  title={},
+@article{louf:2015,
+  title={Patterns of residential segregation},
   author={Louf, R\'emi and Barthelemy, Marc},
   journal={},
   volume={},
