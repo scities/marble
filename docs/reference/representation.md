@@ -91,7 +91,7 @@ city are however well known, and the distribution of categories in each areal
 unit is given by a binomial distribution. The representation is thus defined as
 the number $n_\alpha(t)$ divided by its expected value in an unsegregated city
 
-$$r_\alpha(t) \frac{n_\alpha(t) / n(t)}{N_\alpha / N} $$
+$$r_\alpha(t) = \frac{n_\alpha(t) / n(t)}{N_\alpha / N} $$
 
 In the perfectly unsegregated city (number of individuals equal to the mean of
 the binomial distribution), $r_\alpha = 1$. Of course, there always is a
@@ -106,9 +106,11 @@ we would like to know the areal units that depart form the random situation with
 99% confidence. Therefore, we will say that  
 
 * $\alpha$ is overrepresented in $t$ iff $r_\alpha(t) > 1 +
-  2.57*\sigma_\alpha(t)
+  2.57\,*\sigma_\alpha(t)$
 * $\alpha$ is underrepresented in $t$ iff $r_\alpha(t) < 1 +
-  2.57*\sigma_\alpha(t)
+  2.57\,\sigma_\alpha(t)$
+
+
 
 !!! Beware
     The knowledge of both $r_\alpha(t)$ and
@@ -118,8 +120,8 @@ we would like to know the areal units that depart form the random situation with
 **Parameters**
 
 * `distribution`  dictionary
-> Takes a dictionary of dictionaries with distribution[areal_unit][category] =
-> number 
+> Takes a dictionary of dictionaries with  
+> distribution[areal_unit][category] = number 
 * `classes` dictionary, optional
 > Takes a dictionary of lists with classes[class] = [cat1, cat2, ...]  
 > If not specified, the algorithm will use the categories found in
@@ -135,3 +137,23 @@ we would like to know the areal units that depart form the random situation with
 
 
 ## Examples
+
+Let us look at how to compute the concentration, proportion and representation for the categories 0, 1 and 2 in a
+fictional region with two areal units A and B.
+
+```python
+>>> import marble as mb
+>>> city = {"A":{0: 10, 1:0, 2:23},
+          "B":{0: 0, 1:10, 2:8}}
+>>> co = mb.concentration(city)
+>>> print co['A'][0]
+1.0
+
+>>> pr = mb.proportion(city)
+>>> print pr['A'][0]
+0.303
+
+>>> rep = mb.representation(city)
+>>> print rep['A'][0]
+(1.55, 0.054)
+```
