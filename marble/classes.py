@@ -150,7 +150,7 @@ def cluster_categories(distribution, exposure):
 
     .. math::
         E_{\alpha, \gamma} = \frac{1}{N_\beta + N_\delta} \left( N_\beta
-        E_{\alpha, \beta} + N_\delta M_{\alpha, \delta} \right)
+        E_{\alpha, \beta} + N_\delta E_{\alpha, \delta} \right)
 
 
     Parameters
