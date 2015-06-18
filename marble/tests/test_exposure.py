@@ -18,8 +18,8 @@ def segregated_city():
 
 def two_way_city():
     """ perfect two-way exposure for 1 and 2 """
-    city = {"A":{1:7, 2:13, 3:0},
-            "B":{1:7, 2:13, 3:0},
+    city = {"A":{1:20, 2:28, 3:0},
+            "B":{1:10, 2:14, 3:0},
             "C":{1:0, 2:0, 3:37}}
     return city
 
