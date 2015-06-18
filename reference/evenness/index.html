@@ -149,8 +149,36 @@
           <div role="main">
             <div class="section">
               <h1 id="unevenness">(un)Evenness</h1>
-<h3 id="dissimilarity-distribution-classesnone">dissimilarity <em>(distribution, classes=None)</em></h3>
+<h3 id="dissimilarity-distribution-classesnone"><strong>dissimilarity</strong> (distribution, classes=<em>None</em>)</h3>
+<p>The index, popularised by Duncan &amp; Duncan in 1955, measures the different in
+concentration between the different categories.</p>
+<p>The dissimilarity between the categories <mathjax>$\alpha$</mathjax> and <mathjax>$\beta$</mathjax> is defined as</p>
 <p><mathjax>$$D_{\alpha \beta} = \frac{1}{2} \sum_{t=1}^T \left| \frac{n_\alpha(t)}{N_\alpha} - \frac{n_\beta(t)}{N_\beta} \right|$$</mathjax></p>
+<p>By construction, we have <mathjax>$D \in \left[0, 1\right]$</mathjax>, with <mathjax>$D=1$</mathjax> when the
+categories are never present in the same areal units (perfect segregation) and
+<mathjax>$D=0$</mathjax> when their respective concentrations are identical in all units.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>distribution</code>  dictionary<blockquote>
+<p>Takes a dictionary of dictionaries with<br />
+distribution[areal_unit][category] = number </p>
+</blockquote>
+</li>
+<li><code>classes</code> dictionary, optional<blockquote>
+<p>Takes a dictionary of lists with classes[class] = [cat1, cat2, ...]<br />
+If not specified, the algorithm will use the categories found in
+<code>distribution</code></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><code>dissimilarity</code> <blockquote>
+<p>Returns a dictionary of dictionaries with<br />
+dissimilarity[alpha][beta] = <mathjax>$D_{\alpha \beta}$</mathjax> </p>
+</blockquote>
+</li>
+</ul>
             </div>
           </div>
           <footer>
@@ -195,7 +223,7 @@
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-14 21:15:02.990058
+Docs Build Date : 2015-06-18 13:33:25.054890
 -->
 </body>
 </html>

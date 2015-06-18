@@ -95,6 +95,12 @@
                         
                             <li class="toctree-l3"><a href="#contribute">Contribute</a></li>
                             
+                                <li><a class="toctree-l4" href="#fork-marble-and-clone">Fork marble and clone</a></li>
+                            
+                                <li><a class="toctree-l4" href="#create-a-new-branch">Create a new branch</a></li>
+                            
+                                <li><a class="toctree-l4" href="#push-your-changes-and-make-a-pull-request">Push your changes and make a pull request</a></li>
+                            
                         
                         </ul>
                     
@@ -147,6 +153,36 @@
           <div role="main">
             <div class="section">
               <h1 id="contribute">Contribute</h1>
+<p>Contributions in the form of bugfixes, documentation or new features are more
+than welcome! Here are the steps to follow when contributing some code to the
+Marble repository.</p>
+<h2 id="fork-marble-and-clone">Fork marble and clone</h2>
+<p>Go on <a href="http://scities.github.com/marble">Marble</a> and click on the <code>fork</code> button
+to create your own fork of the repository (you will need a Github account).</p>
+<p>Now you can clone the repository locally to work on it. Assuming your username
+is <strong>username</strong>, cd in your console to the directory where you want the code to
+be downloaded and type</p>
+<pre><code class="bash">git clone https://username.github.com/marble.git
+</code></pre>
+
+<p>the code of Marble now sits in the folder "marble".</p>
+<h2 id="create-a-new-branch">Create a new branch</h2>
+<p><strong>Before</strong> making any change to the code, please create a separate branch, with
+a name that makes an explicit reference to the modification you are trying to
+make. If you want to make several modifications (say a bugfix, and a new
+feature), create as many separate branches as necessary. For instance</p>
+<pre><code class="bash">git checkout -b new_code
+</code></pre>
+
+<h2 id="push-your-changes-and-make-a-pull-request">Push your changes and make a pull request</h2>
+<p>To push your branch to your forked repository, type</p>
+<pre><code class="bash">git push origin new_code
+</code></pre>
+
+<p>Now you can go to your forked project github page and issue a pull request from
+there. Please describe the changes that you made in the Pull Request, and
+reference the issues you are adressing (if any)!</p>
+<p>Thanks!</p>
             </div>
           </div>
           <footer>
@@ -191,7 +227,7 @@
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-14 21:15:02.993994
+Docs Build Date : 2015-06-18 13:33:25.065190
 -->
 </body>
 </html>
