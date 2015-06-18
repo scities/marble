@@ -229,7 +229,7 @@ def uncover_classes(distribution, exposure, ci_factor=10):
    .. math::
         E_{\beta, \delta} > 1 + 10 \sigma_{\beta, \delta} 
         
-    (99 CI according to the Chebyshed inequality). The aggregation procedure
+    (99% CI according to the Chebyshev inequality). The aggregation procedure
     may therefore stop before all categories are aggregated in one unique class,
     and output the classes repartition of the original categories. 
 
