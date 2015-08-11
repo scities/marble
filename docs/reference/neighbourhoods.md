@@ -5,7 +5,7 @@
 [Representation](representation.md) allows us to determine whether a category is over-, under- or
 normally represented in the different areal units. We simply define
 neighbourhoods as the areal units where the different categories are
-over-represented.
+overrepresented.
 
 ## Measures
 
@@ -38,8 +38,9 @@ category is overrepresented.
 ### **neighbourhoods** (distribution, areal_units, classes=*None*)
 
 This function takes the distribution of income and the areal units' shape (as a
-[Shapely Polygon object](http://toblerity.org/shapely/manual.html) and outputs the clusters where the different categories
-are overrepresented, or neighbourhoods. 
+[Shapely Polygon object](http://toblerity.org/shapely/manual.html)) and outputs
+the clusters where the different categories are overrepresented, or
+neighbourhoods. 
 
 Two areal units are said to belong to the same cluster if they are contiguous,
 i.e. if the intersection of their respective perimeter is a line.
@@ -65,9 +66,8 @@ i.e. if the intersection of their respective perimeter is a line.
 
 ## Examples
 
-Let us look in the following example at how to extract the neighbourhoods from
-the distribution of individuals from different categories using Marble, and plot
-a map of the city showing the units where category 1 is overrepresented using
+The following example shows how to extract the neighbourhoods using Marble, and plots
+a map of the city showing the units where category $1$ is overrepresented using
 matplotlib.
 
 We assume that the distribution is contained in the variable `city`. The shape
@@ -84,7 +84,7 @@ with fiona.open('path/to/areal_units.shp', 'r', 'ESRI Shapefile') as source:
        units[f['properties']['ID_FIELD']] = shape(f['geometry'])
 ```
 
-This imports the areal units as [Shapely Polygon Objects](http://toblerity.org/shapely/manual.html) and store them in the variable `units`.
+This imports the areal units as [Shapely Polygon Objects](http://toblerity.org/shapely/manual.html) and stores them in the variable `units`.
 
 ```python
 import marble as mb
@@ -118,5 +118,5 @@ ax.axis('off')
 ax.autoscale_view(True,True,True)
 plt.show()
 ```
-This plots the areal units where individuals belonging to category 1 are
+This plots the areal units where individuals belonging to category $1$ are
 overrepresented in black, and the others in white.
