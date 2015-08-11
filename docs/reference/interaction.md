@@ -5,8 +5,8 @@
 Having found a way to quantify the [presence](representation.md) of
 categories in the various areal units, and identified
 [neighbourhoods](neighbourhoods.md), we would like to quantify the extent to
-which individuals form various categories are exposed to one another, the extent
-to which they interact with one another.
+which individuals from various categories are exposed to one another. In other
+words, the extent to which they *potentially* interact with one another.
 
 ## Measure
 
@@ -21,7 +21,7 @@ $$E_{\alpha \beta} = \frac{1}{N} \sum_{t=1}^T n(t)\, r_\alpha(t)\, r_\beta(t)$$
 
 Although it is not straightforward when written in this form,  the exposure
 is the average representation of $\beta$ witnessed by the $\alpha$, or
-conversely the average representation of \alpha witnessed by the $\beta$. It is
+conversely the average representation of $\alpha$ as witnessed by the $\beta$. It is
 independent of the city's overall inequality levels.
 
 In the unsegregated configuration, the exposure is equal on average to
