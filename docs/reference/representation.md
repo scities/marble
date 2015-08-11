@@ -6,7 +6,7 @@ Maybe the most fundamental quantity in all studies of segregation is how we
 quantify the presence of a category in areal units. All other measures are then
 based on the measure of presence. Several indicators exist, and one needs to be
 aware of their meaning, their qualities and their shortcomings. Per se, if one's
-goal is to indentify areal units with high levels of segregation *everything
+goal is to identify areal units with high levels of segregation *everything
 else being equal*, one should use the representation defined below. Other
 measures can have their use, but are biaised and thus cannot be used for an
 assessment of segregation.
