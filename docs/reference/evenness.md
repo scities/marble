@@ -2,7 +2,7 @@
 
 ### **dissimilarity** (distribution, classes=*None*)
 
-The index, popularised by Duncan & Duncan in 1955, measures the different in
+The index, popularised by Duncan & Duncan in 1955, measures the difference in
 concentration between the different categories.
 
 The dissimilarity between the categories $\alpha$ and $\beta$ is defined as
