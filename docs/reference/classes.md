@@ -1,8 +1,8 @@
 # Emergent classes
 
-Using the [representation](representation.md) as a measure of interaction
-between classes, we can aggregate the different categories into classes based on
-their mutual interaction/repulsion.
+Using the [exposure](interaction.md) as a measure of interaction between
+classes, we can aggregate the different categories into classes based on their
+mutual interaction/repulsion.
 
 ## Measures
 
@@ -12,14 +12,14 @@ their mutual interaction/repulsion.
 
 At each step of the aggregation, we look for the pair $(\beta, \delta)$ of
 categories that has the highest exposure (renormalised by the maximum
-possible value). We aggregate them in a new category $\gamma$ whose exposure
+possible value). We aggregate the pair in a new category $\gamma$ whose exposure
 with the other categories $\alpha$ is given by
 
 $$ E_{\alpha, \gamma} = \frac{1}{N_\beta + N_\delta} \left( N_\beta\,
 E_{\alpha, \beta} + N_\delta\, E_{\alpha, \delta} \right)
 $$
 
-The function return a linkage matrix that encode the hierarchical tree. At the $i$th iteration of the
+The function returns a linkage matrix that encodes the hierarchical tree. At the $i$th iteration of the
 algorithm, $L[i,0]$ and $L[i,1]$ are aggregated to form the $n+i$th cluster. The
 exposure between $L[i,1]$ and $L[i,0]$ is given by $L[i,3]$, the variance in the
 corresponding unsegregated city is given by $L[i,4]$.
@@ -47,14 +47,14 @@ corresponding unsegregated city is given by $L[i,4]$.
 The classes are uncovered using the spatial repartition of individuals from
 different categories, using their relative exposure.
 
-We only aggregate the pair $\beta$,$\delta$  in the same class if the two categories attract each other, that is
+We only aggregate the pair $(\beta$,$\delta)$  in the same class if the two categories attract each other, that is
 if the exposure
 
-$$E_{\beta, \delta} > 1 + 10 \sigma_{\beta, \delta}$$
+$$E_{\beta, \delta} > 1 + 10\; \sigma_{\beta, \delta}$$
     
 ($99\%$ CI according to the Chebyshev inequality). The aggregation procedure
 may therefore stop before all categories are aggregated in one unique class,
-and output the classes repartition of the original categories. 
+and output the repartition of the original categories into classes. 
 
 **Parameters**
 
