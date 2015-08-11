@@ -102,7 +102,7 @@ we first compute the variance:
 
 $$\mathrm{Var}\left[r_\alpha(t)\right] = \sigma_\alpha(t)^2 = \frac{1}{N_\alpha} \left[\frac{N}{n(t)} - 1\right]$$
 
-we would like to know the areal units that depart form the random situation with
+we would like to know the areal units that depart from the random situation with
 99% confidence. Therefore, we will say that  
 
 * $\alpha$ is overrepresented in $t$ iff $r_\alpha(t) > 1 +
