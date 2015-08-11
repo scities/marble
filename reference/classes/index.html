@@ -149,20 +149,20 @@
           <div role="main">
             <div class="section">
               <h1 id="emergent-classes">Emergent classes</h1>
-<p>Using the <a href="../representation/">representation</a> as a measure of interaction
-between classes, we can aggregate the different categories into classes based on
-their mutual interaction/repulsion.</p>
+<p>Using the <a href="../interaction/">exposure</a> as a measure of interaction between
+classes, we can aggregate the different categories into classes based on their
+mutual interaction/repulsion.</p>
 <h2 id="measures">Measures</h2>
 <hr />
 <h3 id="cluster_categories-distribution-exposure"><strong>cluster_categories</strong> (distribution, exposure)</h3>
 <p>At each step of the aggregation, we look for the pair <mathjax>$(\beta, \delta)$</mathjax> of
 categories that has the highest exposure (renormalised by the maximum
-possible value). We aggregate them in a new category <mathjax>$\gamma$</mathjax> whose exposure
+possible value). We aggregate the pair in a new category <mathjax>$\gamma$</mathjax> whose exposure
 with the other categories <mathjax>$\alpha$</mathjax> is given by</p>
 <p><mathjax>$$ E_{\alpha, \gamma} = \frac{1}{N_\beta + N_\delta} \left( N_\beta\,
 E_{\alpha, \beta} + N_\delta\, E_{\alpha, \delta} \right)
 $$</mathjax></p>
-<p>The function return a linkage matrix that encode the hierarchical tree. At the <mathjax>$i$</mathjax>th iteration of the
+<p>The function returns a linkage matrix that encodes the hierarchical tree. At the <mathjax>$i$</mathjax>th iteration of the
 algorithm, <mathjax>$L[i,0]$</mathjax> and <mathjax>$L[i,1]$</mathjax> are aggregated to form the <mathjax>$n+i$</mathjax>th cluster. The
 exposure between <mathjax>$L[i,1]$</mathjax> and <mathjax>$L[i,0]$</mathjax> is given by <mathjax>$L[i,3]$</mathjax>, the variance in the
 corresponding unsegregated city is given by <mathjax>$L[i,4]$</mathjax>.</p>
@@ -192,12 +192,12 @@ structure.</p>
 <h3 id="uncover_classes-distribution-exposure-ci_factor10"><strong>uncover_classes</strong> (distribution, exposure, ci_factor=<em>10</em>)</h3>
 <p>The classes are uncovered using the spatial repartition of individuals from
 different categories, using their relative exposure.</p>
-<p>We only aggregate the pair <mathjax>$\beta$</mathjax>,<mathjax>$\delta$</mathjax>  in the same class if the two categories attract each other, that is
+<p>We only aggregate the pair <mathjax>$(\beta$</mathjax>,<mathjax>$\delta)$</mathjax>  in the same class if the two categories attract each other, that is
 if the exposure</p>
-<p><mathjax>$$E_{\beta, \delta} &gt; 1 + 10 \sigma_{\beta, \delta}$$</mathjax></p>
+<p><mathjax>$$E_{\beta, \delta} &gt; 1 + 10\; \sigma_{\beta, \delta}$$</mathjax></p>
 <p>(<mathjax>$99\%$</mathjax> CI according to the Chebyshev inequality). The aggregation procedure
 may therefore stop before all categories are aggregated in one unique class,
-and output the classes repartition of the original categories. </p>
+and output the repartition of the original categories into classes. </p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>distribution</code>  dictionary<blockquote>
@@ -270,7 +270,7 @@ classes[<mathjax>$i$</mathjax>] = [categories in class <mathjax>$i$</mathjax>] <
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-18 13:35:01.350180
+Docs Build Date : 2015-08-11 23:28:51.839257
 -->
 </body>
 </html>

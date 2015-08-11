@@ -157,7 +157,7 @@
 <p><a href="../representation/">Representation</a> allows us to determine whether a category is over-, under- or
 normally represented in the different areal units. We simply define
 neighbourhoods as the areal units where the different categories are
-over-represented.</p>
+overrepresented.</p>
 <h2 id="measures">Measures</h2>
 <hr />
 <h3 id="overrepresented_units-distribution-classesnone"><strong>overrepresented_units</strong> (distribution, classes=<em>None</em>)</h3>
@@ -188,8 +188,9 @@ units[category] = [unit1, ..., unitN]</p>
 <hr />
 <h3 id="neighbourhoods-distribution-areal_units-classesnone"><strong>neighbourhoods</strong> (distribution, areal_units, classes=<em>None</em>)</h3>
 <p>This function takes the distribution of income and the areal units' shape (as a
-<a href="http://toblerity.org/shapely/manual.html">Shapely Polygon object</a> and outputs the clusters where the different categories
-are overrepresented, or neighbourhoods. </p>
+<a href="http://toblerity.org/shapely/manual.html">Shapely Polygon object</a>) and outputs
+the clusters where the different categories are overrepresented, or
+neighbourhoods. </p>
 <p>Two areal units are said to belong to the same cluster if they are contiguous,
 i.e. if the intersection of their respective perimeter is a line.</p>
 <p><strong>Parameters</strong></p>
@@ -220,9 +221,8 @@ neighbourhoods[category] = [[unit in cluster1], ..., [units in cluster N]]</p>
 </li>
 </ul>
 <h2 id="examples">Examples</h2>
-<p>Let us look in the following example at how to extract the neighbourhoods from
-the distribution of individuals from different categories using Marble, and plot
-a map of the city showing the units where category 1 is overrepresented using
+<p>The following example shows how to extract the neighbourhoods using Marble, and plots
+a map of the city showing the units where category <mathjax>$1$</mathjax> is overrepresented using
 matplotlib.</p>
 <p>We assume that the distribution is contained in the variable <code>city</code>. The shape
 of the areal units are contained in a shapefile located at
@@ -236,7 +236,7 @@ with fiona.open('path/to/areal_units.shp', 'r', 'ESRI Shapefile') as source:
        units[f['properties']['ID_FIELD']] = shape(f['geometry'])
 </code></pre>
 
-<p>This imports the areal units as <a href="http://toblerity.org/shapely/manual.html">Shapely Polygon Objects</a> and store them in the variable <code>units</code>.</p>
+<p>This imports the areal units as <a href="http://toblerity.org/shapely/manual.html">Shapely Polygon Objects</a> and stores them in the variable <code>units</code>.</p>
 <pre><code class="python">import marble as mb
 
 overrepresented = mb.overrepresented_units(city)
@@ -267,7 +267,7 @@ ax.autoscale_view(True,True,True)
 plt.show()
 </code></pre>
 
-<p>This plots the areal units where individuals belonging to category 1 are
+<p>This plots the areal units where individuals belonging to category <mathjax>$1$</mathjax> are
 overrepresented in black, and the others in white.</p>
             </div>
           </div>
@@ -313,7 +313,7 @@ overrepresented in black, and the others in white.</p>
 
 <!--
 MkDocs version  : 0.12.2
-Docs Build Date : 2015-06-18 13:35:01.330045
+Docs Build Date : 2015-08-11 23:28:51.819658
 -->
 </body>
 </html>
