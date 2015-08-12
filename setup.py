@@ -4,13 +4,12 @@ def readme():
     with open('README.rst.example') as f:
         return f.read()
 
-(name='marble',
-    version='0.1',
-    description=('A python library to study socio-spatial stratification '+
-                 'in cities'),
-    long_description=readme(),
+setup(
+    name='marble',
+    version='1.0',
+    description=('Study residential segregation, explore its different dimensions.'),
     url='http://github.com/scities/marble',
-    author='Rémi Louf',
+    author='Remi Louf',
     author_email='remi.louf@sciti.es',
     license='BSD',
     packages=['marble'],
@@ -19,5 +18,6 @@ def readme():
         'shapely'
         ],
     testt_suite='nose.collector',
-        tests_require=['nose'],
-    zip_safe=False)
+    tests_require=['nose'],
+    zip_safe = False,
+)
