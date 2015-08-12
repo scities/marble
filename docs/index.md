@@ -42,7 +42,3 @@ import marble as mb
 ```
 
 at the begining of your programs (or in the python interpreter).
-
-### Github (development)
-
-
