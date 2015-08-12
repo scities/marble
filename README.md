@@ -10,6 +10,14 @@ Study residential segregation, explore its different dimensions.
 * Define neighbourhoods
 * Study the spatial pattern of segregation
 
+### Install
+
+Marble is available via PyPI. Type in command line
+
+```
+sudo pip install marble
+```
+
 ### Website and documentation
 
 http://scities.github.io/marble
