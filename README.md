@@ -1,7 +1,6 @@
 # Marble
 
-[![Build Status](https://travis-ci.org/scities/marble.svg)](https://travis-ci.org/scities/marble)
-[![Coverage Status](https://coveralls.io/repos/scities/marble/badge.svg)](https://coveralls.io/r/scities/marble)
+[![DOI](https://zenodo.org/badge/10166/scities/marble.svg)](https://zenodo.org/badge/latestdoi/10166/scities/marble)
 
 Study residential segregation, explore its different dimensions.
 
