@@ -36,7 +36,7 @@ If you use marble in a publication, please cite
 @article{louf:2015,
   title={Patterns of residential segregation},
   author={Louf, R\'emi and Barthelemy, Marc},
-  journal={},
+  journal={arXiv:1511.04268},
   volume={},
   pages={},
   year={2015},
