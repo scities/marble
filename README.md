@@ -33,13 +33,14 @@ If you find this code useful in your research, please let me know!
 If you use marble in a publication, please cite
 
 ```
-@article{louf:2015,
+@article{louf:2016,
   title={Patterns of residential segregation},
   author={Louf, R\'emi and Barthelemy, Marc},
   journal={PLOS ONE},
   volume={11},
   pages={e0157476.},
-  year={2015},
+  year={2016},
+  doi={10.1371/journal.pone.0157476}
 }
 ```
 
