@@ -13,7 +13,7 @@ setup(
     author_email='remi.louf@sciti.es',
     license='BSD',
     packages=['marble'],
-    setup_requires=[
+    install_requires=[
         'networkx',
         'shapely'
         ],
